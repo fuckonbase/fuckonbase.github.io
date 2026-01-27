@@ -4,6 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>fuckonbase</title>
+
+  <style>
+    @keyframes glowPulse {
+      0% {
+        box-shadow:
+          0 0 14px rgba(0, 170, 255, 0.35),
+          0 0 28px rgba(0, 170, 255, 0.20);
+      }
+      50% {
+        box-shadow:
+          0 0 26px rgba(0, 170, 255, 0.65),
+          0 0 52px rgba(0, 170, 255, 0.35);
+      }
+      100% {
+        box-shadow:
+          0 0 14px rgba(0, 170, 255, 0.35),
+          0 0 28px rgba(0, 170, 255, 0.20);
+      }
+    }
+  </style>
 </head>
 
 <body style="
@@ -19,7 +39,7 @@
   <div style="text-align:center; padding:24px;">
 
     <!-- LOGO -->
-    <img src="bild.jpg?v=8"
+    <img src="bild.jpg?v=11"
          alt="fuckonbase"
          style="
            width:300px;
@@ -27,6 +47,7 @@
            border-radius:14px;
            display:block;
            margin:0 auto 28px auto;
+           animation: glowPulse 4s ease-in-out infinite;
          ">
 
     <!-- COMING SOON -->
@@ -48,61 +69,23 @@
       margin-top:10px;
     ">
 
-      <!-- X -->
-      <a href="https://x.com/fuck_on_base"
-         target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        <img src="x.png?v=8"
-             alt="X"
-             style="width:20px; height:20px;">
+      <a href="https://x.com/fuck_on_base" target="_blank"
+         style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+                border:1px solid rgba(255,255,255,0.25);border-radius:12px;">
+        <img src="x.png?v=11" style="width:20px;height:20px;">
       </a>
 
-      <!-- DEXSCREENER -->
       <a href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e"
          target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        <img src="dex.png?v=8"
-             alt="Dexscreener"
-             style="width:20px; height:20px;">
+         style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+                border:1px solid rgba(255,255,255,0.25);border-radius:12px;">
+        <img src="dex.png?v=11" style="width:20px;height:20px;">
       </a>
 
-      <!-- TELEGRAM -->
-      <a href="https://t.me/+N0PPs93rNFhjOGFi"
-         target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        <img src="tg.png?v=8"
-             alt="Telegram"
-             style="width:20px; height:20px;">
+      <a href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank"
+         style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+                border:1px solid rgba(255,255,255,0.25);border-radius:12px;">
+        <img src="tg.png?v=11" style="width:20px;height:20px;">
       </a>
 
     </div>
