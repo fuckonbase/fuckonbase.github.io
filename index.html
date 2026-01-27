@@ -6,6 +6,7 @@
   <title>fuckonbase</title>
 
   <style>
+    /* Pulsierender Glow fürs Logo */
     @keyframes glowPulse {
       0% {
         box-shadow:
@@ -23,6 +24,30 @@
           0 0 28px rgba(30, 60, 200, 0.20);
       }
     }
+
+    /* Social Icons – Hover Effekt */
+    .social {
+      width:44px;
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(255,255,255,0.25);
+      border-radius:12px;
+      text-decoration:none;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .social:hover {
+      transform: scale(1.15);
+      border-color: rgba(30, 60, 200, 0.9);
+      box-shadow:
+        0 0 12px rgba(30, 60, 200, 0.6),
+        0 0 24px rgba(30, 60, 200, 0.4);
+    }
   </style>
 </head>
 
@@ -39,7 +64,7 @@
   <div style="text-align:center; padding:24px;">
 
     <!-- LOGO -->
-    <img src="bild.jpg?v=13"
+    <img src="bild.jpg?v=15"
          alt="fuckonbase"
          style="
            width:300px;
@@ -69,55 +94,25 @@
       margin-top:10px;
     ">
 
-      <!-- X -->
-      <a href="https://x.com/fuck_on_base"
+      <a class="social"
+         href="https://x.com/fuck_on_base"
          target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        <img src="x.png?v=13" alt="X" style="width:20px; height:20px;">
+         rel="noopener noreferrer">
+        <img src="x.png?v=15" alt="X" style="width:20px; height:20px;">
       </a>
 
-      <!-- DEXSCREENER -->
-      <a href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e"
+      <a class="social"
+         href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e"
          target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        <img src="dex.png?v=13" alt="Dexscreener" style="width:20px; height:20px;">
+         rel="noopener noreferrer">
+        <img src="dex.png?v=15" alt="Dexscreener" style="width:20px; height:20px;">
       </a>
 
-      <!-- TELEGRAM -->
-      <a href="https://t.me/+N0PPs93rNFhjOGFi"
+      <a class="social"
+         href="https://t.me/+N0PPs93rNFhjOGFi"
          target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-         ">
-        <img src="tg.png?v=13" alt="Telegram" style="width:20px; height:20px;">
+         rel="noopener noreferrer">
+        <img src="tg.png?v=15" alt="Telegram" style="width:20px; height:20px;">
       </a>
 
     </div>
