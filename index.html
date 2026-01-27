@@ -4,6 +4,106 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>fuckonbase</title>
+
+  <style>
+    /* Stärkerer pulsierender Glow fürs Logo */
+    @keyframes glowPulse {
+      0% {
+        box-shadow:
+          0 0 18px rgba(30, 60, 200, 0.45),
+          0 0 40px rgba(30, 60, 200, 0.28),
+          0 0 90px rgba(30, 60, 200, 0.14);
+      }
+      50% {
+        box-shadow:
+          0 0 34px rgba(30, 60, 200, 0.85),
+          0 0 78px rgba(30, 60, 200, 0.50),
+          0 0 160px rgba(30, 60, 200, 0.22);
+      }
+      100% {
+        box-shadow:
+          0 0 18px rgba(30, 60, 200, 0.45),
+          0 0 40px rgba(30, 60, 200, 0.28),
+          0 0 90px rgba(30, 60, 200, 0.14);
+      }
+    }
+
+    /* Social Icons – Hover Effekt */
+    .social {
+      width:44px;
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(255,255,255,0.25);
+      border-radius:12px;
+      text-decoration:none;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .social:hover {
+      transform: scale(1.15);
+      border-color: rgba(30, 60, 200, 0.9);
+      box-shadow:
+        0 0 12px rgba(30, 60, 200, 0.6),
+        0 0 24px rgba(30, 60, 200, 0.4);
+    }
+
+    /* Contract Box – gleicher Style wie Social, nur breiter */
+    .contractBox {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid rgba(255,255,255,0.25);
+      border-radius:12px;
+      background:transparent;
+      color:white;
+      cursor:pointer;
+      user-select:none;
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .contractBox:hover {
+      transform: scale(1.04);
+      border-color: rgba(30, 60, 200, 0.9);
+      box-shadow:
+        0 0 12px rgba(30, 60, 200, 0.6),
+        0 0 24px rgba(30, 60, 200, 0.4);
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      letter-spacing: 0.3px;
+      opacity: 0.95;
+    }
+
+    .label {
+      font-size: 12px;
+      letter-spacing: 1px;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+
+    .copied {
+      display:none;
+      margin-left:6px;
+      padding:3px 8px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.25);
+      font-size:12px;
+      opacity:0.9;
+      white-space: nowrap;
+    }
+  </style>
 </head>
 
 <body style="
@@ -18,22 +118,19 @@
 ">
   <div style="text-align:center; padding:24px;">
 
-    <!-- LOGO (stärkerer Glow) -->
-    <img src="bild.jpg?v=8"
+    <!-- LOGO -->
+    <img src="bild.jpg?v=16"
          alt="fuckonbase"
          style="
            width:300px;
            max-width:85vw;
            border-radius:14px;
            display:block;
-           margin:0 auto 26px auto;
-           box-shadow:
-             0 0 24px rgba(255,255,255,0.18),
-             0 0 60px rgba(255,255,255,0.10),
-             0 0 110px rgba(255,255,255,0.06);
+           margin:0 auto 28px auto;
+           animation: glowPulse 4s ease-in-out infinite;
          ">
 
-    <!-- COMING SOON (kleiner, mittig) -->
+    <!-- COMING SOON -->
     <div style="
       font-size:16px;
       letter-spacing:1.5px;
@@ -43,95 +140,44 @@
       coming soon
     </div>
 
-    <!-- CONTRACT (kopieren) -->
-    <div style="display:flex; justify-content:center; margin-bottom:16px;">
-      <button id="copyContractBtn" type="button"
-        style="
-          display:flex;
-          align-items:center;
-          gap:10px;
-          padding:10px 14px;
-          border:1px solid rgba(255,255,255,0.25);
-          border-radius:12px;
-          background:transparent;
-          color:white;
-          cursor:pointer;
-          font-size:13px;
-          letter-spacing:0.6px;
-          opacity:0.92;
-          transform: translateY(0);
-          transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-        "
-        onmouseenter="this.style.transform='translateY(-2px)'; this.style.borderColor='rgba(255,255,255,0.45)'; this.style.boxShadow='0 0 18px rgba(255,255,255,0.12)'; this.style.opacity='1';"
-        onmouseleave="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.25)'; this.style.boxShadow='none'; this.style.opacity='0.92';"
-      >
-        <span style="opacity:0.75;">Contract</span>
-        <span id="contractText" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">
-          0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07
-        </span>
-        <span id="copiedBadge" style="
-          display:none;
-          margin-left:6px;
-          padding:3px 8px;
-          border-radius:999px;
-          border:1px solid rgba(255,255,255,0.25);
-          font-size:12px;
-          opacity:0.9;
-        ">Copied</span>
+    <!-- CONTRACT (click to copy) -->
+    <div style="display:flex; justify-content:center; margin-bottom:22px;">
+      <button id="copyContractBtn" type="button" class="contractBox" aria-label="Copy contract">
+        <span class="label">Contract</span>
+        <!-- Kurz angezeigt, aber voll kopiert -->
+        <span id="contractDisplay" class="mono">0xc8f8…BB07</span>
+        <span id="copiedBadge" class="copied">Copied</span>
       </button>
     </div>
 
-    <!-- SOCIAL ICONS (klein, unten) -->
+    <!-- SOCIAL ICONS -->
     <div style="
       display:flex;
       gap:14px;
       justify-content:center;
       align-items:center;
-      margin-top:6px;
+      margin-top:10px;
     ">
 
-      <!-- X -->
-      <a href="https://x.com/fuck_on_base"
+      <a class="social"
+         href="https://x.com/fuck_on_base"
          target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-           transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-           opacity:0.92;
-         "
-         onmouseenter="this.style.transform='translateY(-2px)'; this.style.borderColor='rgba(255,255,255,0.45)'; this.style.boxShadow='0 0 18px rgba(255,255,255,0.12)'; this.style.opacity='1';"
-         onmouseleave="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.25)'; this.style.boxShadow='none'; this.style.opacity='0.92';"
-      >
-        <img src="x.png?v=8" alt="X" style="width:20px; height:20px;">
+         rel="noopener noreferrer">
+        <img src="x.png?v=16" alt="X" style="width:20px; height:20px;">
       </a>
 
-      <!-- DEXSCREENER -->
-      <a href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e"
+      <a class="social"
+         href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e"
          target="_blank"
-         rel="noopener noreferrer"
-         style="
-           width:44px;
-           height:44px;
-           display:flex;
-           align-items:center;
-           justify-content:center;
-           border:1px solid rgba(255,255,255,0.25);
-           border-radius:12px;
-           text-decoration:none;
-           transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-           opacity:0.92;
-         "
-         onmouseenter="this.style.transform='translateY(-2px)'; this.style.borderColor='rgba(255,255,255,0.45)'; this.style.boxShadow='0 0 18px rgba(255,255,255,0.12)'; this.style.opacity='1';"
-         onmouseleave="this.style.transform='translateY(0)'; this.style.borderColor='rgba(255,255,255,0.25)'; this.style.boxShadow='none'; this.style.opacity='0.92';"
-      >
-        <img src="dex.png?v=8" alt="Dexscreener" style="width:20px; height:20px;">
+         rel="noopener noreferrer">
+        <img src="dex.png?v=16" alt="Dexscreener" style="width:20px; height:20px;">
+      </a>
+
+      <a class="social"
+         href="https://t.me/+N0PPs93rNFhjOGFi"
+         target="_blank"
+         rel="noopener noreferrer">
+        <img src="tg.png?v=16" alt="Telegram" style="width:20px; height:20px;">
       </a>
 
     </div>
@@ -140,8 +186,8 @@
 
   <script>
     (function () {
+      const fullContract = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
       const btn = document.getElementById("copyContractBtn");
-      const contract = document.getElementById("contractText").textContent.trim();
       const badge = document.getElementById("copiedBadge");
 
       function showCopied() {
@@ -153,13 +199,11 @@
       }
 
       async function copyText(text) {
-        // Modern clipboard
         try {
           await navigator.clipboard.writeText(text);
           return true;
         } catch (e) {}
 
-        // Fallback
         try {
           const ta = document.createElement("textarea");
           ta.value = text;
@@ -177,7 +221,7 @@
       }
 
       btn.addEventListener("click", async () => {
-        const ok = await copyText(contract);
+        const ok = await copyText(fullContract);
         if (ok) showCopied();
       });
     })();
