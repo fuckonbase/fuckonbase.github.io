@@ -16,7 +16,7 @@
       overflow-x:hidden;
     }
 
-    /* ================= GLOBAL BACKGROUND (jetzt überall, auch im Hero) ================= */
+    /* ================= GLOBAL BG (überall) ================= */
     .globalBg{
       position:fixed;
       inset:0;
@@ -25,21 +25,19 @@
       overflow:hidden;
     }
 
-    /* große, weichere Glows + mehr Intensität */
     .globalBg::before{
       content:"";
       position:absolute;
       inset:-25%;
       background:
-        radial-gradient(900px 520px at 20% 80%, rgba(var(--royal),0.24), transparent 60%),
-        radial-gradient(900px 520px at 80% 85%, rgba(var(--royal),0.22), transparent 62%),
-        radial-gradient(1200px 700px at 50% 110%, rgba(var(--royal),0.20), transparent 60%),
-        radial-gradient(900px 520px at 50% 20%, rgba(var(--royal),0.12), transparent 65%);
+        radial-gradient(1000px 600px at 20% 80%, rgba(var(--royal),0.28), transparent 62%),
+        radial-gradient(1000px 600px at 80% 85%, rgba(var(--royal),0.26), transparent 64%),
+        radial-gradient(1400px 800px at 50% 115%, rgba(var(--royal),0.24), transparent 62%),
+        radial-gradient(900px 520px at 50% 20%, rgba(var(--royal),0.12), transparent 70%);
       filter: blur(18px);
       opacity:1;
     }
 
-    /* Grid/Lines etwas stärker + mask, damit oben nicht zu wild wird */
     .globalBg::after{
       content:"";
       position:absolute;
@@ -47,93 +45,74 @@
       background:
         repeating-linear-gradient(
           90deg,
-          rgba(var(--royal),0.06) 0px,
-          rgba(var(--royal),0.06) 1px,
+          rgba(var(--royal),0.07) 0px,
+          rgba(var(--royal),0.07) 1px,
           transparent 1px,
-          transparent 95px
+          transparent 90px
         ),
         repeating-linear-gradient(
           0deg,
-          rgba(var(--royal),0.05) 0px,
-          rgba(var(--royal),0.05) 1px,
+          rgba(var(--royal),0.06) 0px,
+          rgba(var(--royal),0.06) 1px,
           transparent 1px,
-          transparent 95px
+          transparent 90px
         );
-      opacity:0.28;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
+      opacity:0.30;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.20) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.20) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
     }
 
-    /* Light beams (räumlich) */
+    /* Light beams */
     .beam{
       position:absolute;
-      width:520px;
-      height:1200px;
+      width:560px;
+      height:1300px;
       top:60%;
       left:50%;
       transform: translate(-50%,-50%) rotate(18deg);
-      background: linear-gradient(to bottom,
-        rgba(var(--royal),0.00),
-        rgba(var(--royal),0.10),
-        rgba(var(--royal),0.00)
-      );
+      background: linear-gradient(to bottom, rgba(var(--royal),0.00), rgba(var(--royal),0.14), rgba(var(--royal),0.00));
       filter: blur(18px);
-      opacity:0.55;
+      opacity:0.70;
       animation: beamMove 10s ease-in-out infinite;
     }
-
     .beam.b2{
-      width:420px;
-      height:1100px;
-      transform: translate(-50%,-50%) rotate(-22deg);
-      opacity:0.45;
-      animation-duration: 12s;
+      width:460px;
+      height:1200px;
       top:58%;
+      transform: translate(-50%,-50%) rotate(-22deg);
+      opacity:0.60;
+      animation: beamMove2 12s ease-in-out infinite;
     }
-
     @keyframes beamMove{
-      0%   { transform: translate(-52%,-52%) rotate(18deg); opacity:0.40; }
-      50%  { transform: translate(-48%,-50%) rotate(22deg); opacity:0.65; }
-      100% { transform: translate(-52%,-52%) rotate(18deg); opacity:0.40; }
+      0%{ transform: translate(-52%,-52%) rotate(18deg); opacity:0.55; }
+      50%{ transform: translate(-48%,-50%) rotate(23deg); opacity:0.90; }
+      100%{ transform: translate(-52%,-52%) rotate(18deg); opacity:0.55; }
     }
-
     @keyframes beamMove2{
-      0%   { transform: translate(-48%,-52%) rotate(-22deg); opacity:0.35; }
-      50%  { transform: translate(-52%,-50%) rotate(-18deg); opacity:0.58; }
-      100% { transform: translate(-48%,-52%) rotate(-22deg); opacity:0.35; }
+      0%{ transform: translate(-48%,-52%) rotate(-22deg); opacity:0.50; }
+      50%{ transform: translate(-52%,-50%) rotate(-17deg); opacity:0.85; }
+      100%{ transform: translate(-48%,-52%) rotate(-22deg); opacity:0.50; }
     }
-    .beam.b2{ animation-name: beamMove2; }
 
-    /* Partikel (mehr + nach oben drift) */
+    /* Particles rising */
     .particle{
       position:absolute;
       width:4px;
       height:4px;
       border-radius:999px;
-      background: rgba(var(--royal),0.85);
-      box-shadow:
-        0 0 12px rgba(var(--royal),0.55),
-        0 0 30px rgba(var(--royal),0.22);
-      opacity:0.7;
+      background: rgba(var(--royal),0.92);
+      box-shadow: 0 0 14px rgba(var(--royal),0.62), 0 0 36px rgba(var(--royal),0.22);
+      opacity:0.78;
       animation: rise var(--dur) linear infinite;
-      transform: translate3d(0,0,0);
     }
-
-    /* leicht unterschiedliche Größen */
-    .particle.s2{ width:3px; height:3px; opacity:0.65; }
-    .particle.s3{ width:5px; height:5px; opacity:0.75; }
+    .particle.s2{ width:3px; height:3px; opacity:0.68; }
+    .particle.s3{ width:5px; height:5px; opacity:0.82; }
 
     @keyframes rise{
-      0%{
-        transform: translate3d(0, 40px, 0);
-        opacity:0;
-      }
-      10%{ opacity:0.8; }
-      90%{ opacity:0.8; }
-      100%{
-        transform: translate3d(var(--dx), calc(-100vh - 120px), 0);
-        opacity:0;
-      }
+      0%{ transform: translate3d(0, 70px, 0); opacity:0; }
+      12%{ opacity:0.85; }
+      90%{ opacity:0.85; }
+      100%{ transform: translate3d(var(--dx), calc(-120vh - 140px), 0); opacity:0; }
     }
 
     /* ================= HERO ================= */
@@ -145,184 +124,101 @@
       padding:24px;
       position:relative;
       text-align:center;
-      background:#000; /* bleibt schwarz, Background kommt durch die fixed layers */
+      background:#000;
     }
 
-    /* unten Teaser stärker */
+    /* Schwarz oben behalten: überdeckt den BG etwas (Hero-Vignette) */
+    .heroVignette{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,0.88), rgba(0,0,0,0.98) 65%),
+        linear-gradient(to bottom, rgba(0,0,0,0.98), rgba(0,0,0,0.92));
+      pointer-events:none;
+      z-index:1;
+    }
+
+    /* unten Teaser */
     .fadeInTeaser{
       position:absolute;
       left:0; right:0; bottom:0;
-      height:220px;
-      background: linear-gradient(to top,
-        rgba(var(--royal),0.18),
-        rgba(var(--royal),0.10),
-        rgba(0,0,0,0));
-      opacity:0.55;
+      height:260px;
+      background: linear-gradient(to top, rgba(var(--royal),0.22), rgba(var(--royal),0.10), rgba(0,0,0,0));
+      opacity:0.65;
       pointer-events:none;
+      z-index:2;
     }
 
     /* Scroll hint */
-    @keyframes scrollHint{
-      0%{ transform: translateY(0); opacity:0.55; }
-      50%{ transform: translateY(8px); opacity:0.95; }
-      100%{ transform: translateY(0); opacity:0.55; }
+    @keyframes scrollHint{ 0%{transform:translateY(0);opacity:.55}50%{transform:translateY(8px);opacity:.95}100%{transform:translateY(0);opacity:.55}}
+    .scrollHint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:4}
+    .scrollText{font-size:12px;letter-spacing:1.6px;opacity:.65;text-transform:uppercase}
+    .scrollDot{width:10px;height:10px;border-radius:999px;background:rgba(var(--royal),0.95);box-shadow:0 0 16px rgba(var(--royal),0.60);animation:scrollHint 1.8s ease-in-out infinite}
+
+    /* Logo glow */
+    @keyframes glowPulse{0%{box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22)}50%{box-shadow:0 0 34px rgba(var(--royal),0.78),0 0 70px rgba(var(--royal),0.38)}100%{box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22)}}
+
+    /* Social icons */
+    .social{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.25);border-radius:12px;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;text-decoration:none;background:rgba(255,255,255,0.02)}
+    .social:hover{transform:scale(1.15);border-color:rgba(var(--royal),0.95);box-shadow:0 0 16px rgba(var(--royal),0.75),0 0 34px rgba(var(--royal),0.42)}
+
+    /* Contract */
+    .copyWrap{margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .contractBox{border:1px solid rgba(255,255,255,0.22);border-radius:12px;padding:12px 14px;max-width:92vw;background:rgba(255,255,255,0.03);cursor:pointer;transition:box-shadow .25s ease,border-color .25s ease}
+    .contractBox:hover{border-color:rgba(var(--royal),0.95);box-shadow:0 0 14px rgba(var(--royal),0.60),0 0 34px rgba(var(--royal),0.30)}
+    .contractLabel{font-size:12px;opacity:.70;margin-bottom:4px}
+    .contractFull{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;word-break:break-all}
+    .status{font-size:12px;opacity:0;display:flex;align-items:center;gap:6px;transition:opacity .25s ease}
+    .status.show{opacity:.95}
+    .check{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(var(--royal),0.95);box-shadow:0 0 10px rgba(var(--royal),0.55);font-size:11px}
+
+    /* ================= EMPTY SCROLL AREA (nur Background) ================= */
+    .space{
+      min-height:180vh; /* viel Scroll */
+      background: transparent; /* nur Background zeigen */
     }
-    .scrollHint{
-      position:absolute;
-      bottom:26px;
-      left:50%;
-      transform: translateX(-50%);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:8px;
+
+    /* ganz unten nochmal etwas “Boost”, damit’s richtig knallt */
+    .bottomBoost{
+      height:260px;
+      background: radial-gradient(900px 520px at 50% 50%, rgba(var(--royal),0.20), transparent 70%);
+      filter: blur(14px);
+      opacity:0.95;
       pointer-events:none;
-      z-index:3;
     }
-    .scrollText{
-      font-size:12px;
-      letter-spacing:1.6px;
-      opacity:0.65;
-      text-transform:uppercase;
-    }
-    .scrollDot{
-      width:10px;
-      height:10px;
-      border-radius:999px;
-      background: rgba(var(--royal),0.9);
-      box-shadow: 0 0 14px rgba(var(--royal),0.55);
-      animation: scrollHint 1.8s ease-in-out infinite;
-    }
-
-    /* ================= Logo Glow ================= */
-    @keyframes glowPulse{
-      0%{ box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22); }
-      50%{ box-shadow:0 0 34px rgba(var(--royal),0.78),0 0 70px rgba(var(--royal),0.38); }
-      100%{ box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22); }
-    }
-
-    /* ================= Social Icons ================= */
-    .social{
-      width:44px;
-      height:44px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:1px solid rgba(255,255,255,0.25);
-      border-radius:12px;
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      text-decoration:none;
-      background: rgba(255,255,255,0.02);
-    }
-    .social:hover{
-      transform: scale(1.15);
-      border-color: rgba(var(--royal),0.95);
-      box-shadow:0 0 16px rgba(var(--royal),0.75),0 0 34px rgba(var(--royal),0.42);
-    }
-
-    /* ================= Contract ================= */
-    .copyWrap{
-      margin-top:52px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:10px;
-    }
-    .contractBox{
-      border:1px solid rgba(255,255,255,0.22);
-      border-radius:12px;
-      padding:12px 14px;
-      max-width:92vw;
-      background: rgba(255,255,255,0.03);
-      cursor:pointer;
-      transition: box-shadow .25s ease, border-color .25s ease;
-    }
-    .contractBox:hover{
-      border-color: rgba(var(--royal),0.95);
-      box-shadow:0 0 14px rgba(var(--royal),0.60),0 0 34px rgba(var(--royal),0.30);
-    }
-    .contractLabel{ font-size:12px; opacity:.70; margin-bottom:4px; }
-    .contractFull{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size:12px;
-      word-break: break-all;
-    }
-    .status{
-      font-size:12px;
-      opacity:0;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      transition: opacity .25s ease;
-    }
-    .status.show{ opacity:.95; }
-    .check{
-      width:14px;height:14px;border-radius:50%;
-      display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(var(--royal),0.95);
-      box-shadow:0 0 10px rgba(var(--royal),0.55);
-      font-size:11px;
-    }
-
-    /* ================= Scroll Section ================= */
-    .section{
-      min-height:160vh;
-      padding:110px 24px 160px;
-      display:flex;
-      justify-content:center;
-      background:#000;
-      position:relative;
-    }
-    .card{
-      width:min(820px,100%);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:16px;
-      background: rgba(255,255,255,0.04);
-      box-shadow:0 0 26px rgba(var(--royal),0.16),0 0 70px rgba(var(--royal),0.08);
-      padding:28px;
-      backdrop-filter: blur(7px);
-      -webkit-backdrop-filter: blur(7px);
-    }
-    .cardTitle{
-      font-size:12px;
-      letter-spacing:1.7px;
-      opacity:0.65;
-      text-transform:uppercase;
-      margin-bottom:12px;
-    }
-    .cardBody{ font-size:16px; line-height:1.6; opacity:0.9; }
-    .muted{ opacity:0.65; font-size:14px; margin-top:12px; }
   </style>
 </head>
 
 <body>
-  <!-- Intensiver Background überall -->
   <div class="globalBg">
     <div class="beam"></div>
     <div class="beam b2"></div>
 
-    <!-- Viele Partikel (gemischt) -->
-    <!-- unten starten, fliegen nach oben -->
-    <span class="particle s3" style="left:6%;  bottom:-20px; --dx: 12px; --dur: 14s;"></span>
-    <span class="particle s2" style="left:12%; bottom:-60px; --dx:-18px; --dur: 18s;"></span>
-    <span class="particle"    style="left:18%; bottom:-40px; --dx: 10px; --dur: 16s;"></span>
-    <span class="particle s2" style="left:26%; bottom:-80px; --dx: 22px; --dur: 20s;"></span>
-    <span class="particle"    style="left:33%; bottom:-30px; --dx:-14px; --dur: 15s;"></span>
-    <span class="particle s3" style="left:40%; bottom:-70px; --dx: 16px; --dur: 19s;"></span>
-    <span class="particle s2" style="left:48%; bottom:-50px; --dx:-10px; --dur: 17s;"></span>
-    <span class="particle"    style="left:56%; bottom:-90px; --dx: 20px; --dur: 21s;"></span>
-    <span class="particle s2" style="left:63%; bottom:-35px; --dx:-22px; --dur: 16s;"></span>
-    <span class="particle s3" style="left:70%; bottom:-75px; --dx: 14px; --dur: 18s;"></span>
-    <span class="particle"    style="left:78%; bottom:-55px; --dx:-16px; --dur: 20s;"></span>
-    <span class="particle s2" style="left:84%; bottom:-95px; --dx: 18px; --dur: 22s;"></span>
-    <span class="particle s3" style="left:90%; bottom:-45px; --dx:-12px; --dur: 17s;"></span>
-    <span class="particle s2" style="left:95%; bottom:-85px; --dx: 10px; --dur: 19s;"></span>
+    <!-- viele Partikel -->
+    <span class="particle s3" style="left:6%;  bottom:-30px; --dx: 12px; --dur: 14s;"></span>
+    <span class="particle s2" style="left:10%; bottom:-120px; --dx:-18px; --dur: 18s;"></span>
+    <span class="particle"    style="left:16%; bottom:-70px; --dx: 10px; --dur: 16s;"></span>
+    <span class="particle s2" style="left:22%; bottom:-160px;--dx: 22px; --dur: 20s;"></span>
+    <span class="particle"    style="left:28%; bottom:-90px; --dx:-14px; --dur: 15s;"></span>
+    <span class="particle s3" style="left:34%; bottom:-180px;--dx: 16px; --dur: 19s;"></span>
+    <span class="particle s2" style="left:40%; bottom:-110px;--dx:-10px; --dur: 17s;"></span>
+    <span class="particle"    style="left:46%; bottom:-220px;--dx: 20px; --dur: 21s;"></span>
+    <span class="particle s2" style="left:52%; bottom:-95px; --dx:-22px; --dur: 16s;"></span>
+    <span class="particle s3" style="left:58%; bottom:-200px;--dx: 14px; --dur: 18s;"></span>
+    <span class="particle"    style="left:64%; bottom:-140px;--dx:-16px; --dur: 20s;"></span>
+    <span class="particle s2" style="left:70%; bottom:-240px;--dx: 18px; --dur: 22s;"></span>
+    <span class="particle s3" style="left:76%; bottom:-130px;--dx:-12px; --dur: 17s;"></span>
+    <span class="particle s2" style="left:82%; bottom:-260px;--dx: 10px; --dur: 19s;"></span>
+    <span class="particle"    style="left:88%; bottom:-170px;--dx:-14px; --dur: 23s;"></span>
+    <span class="particle s3" style="left:94%; bottom:-210px;--dx: 16px; --dur: 25s;"></span>
   </div>
 
   <!-- HERO -->
   <section class="hero">
+    <div class="heroVignette"></div>
+
     <div style="position:relative; z-index:3;">
-      <img src="bild.jpg?v=24"
+      <img src="bild.jpg?v=26"
            alt="fuckonbase"
            style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 4s ease-in-out infinite;">
 
@@ -330,26 +226,21 @@
         coming soon
       </div>
 
-      <!-- SOCIAL ICONS (inkl. Gecko) -->
       <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
         <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-          <img src="x.png?v=24" alt="X" style="width:20px;height:20px;">
+          <img src="x.png?v=26" alt="X" style="width:20px;height:20px;">
         </a>
-
         <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="dex.png?v=24" alt="Dexscreener" style="width:20px;height:20px;">
+          <img src="dex.png?v=26" alt="Dexscreener" style="width:20px;height:20px;">
         </a>
-
         <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="gecko.png?v=24" alt="GeckoTerminal" style="width:20px;height:20px;">
+          <img src="gecko.png?v=26" alt="GeckoTerminal" style="width:20px;height:20px;">
         </a>
-
         <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-          <img src="tg.png?v=24" alt="Telegram" style="width:20px;height:20px;">
+          <img src="tg.png?v=26" alt="Telegram" style="width:20px;height:20px;">
         </a>
       </div>
 
-      <!-- CONTRACT -->
       <div class="copyWrap">
         <div class="contractBox" id="copyBtn">
           <div class="contractLabel">Contract</div>
@@ -369,29 +260,19 @@
     <div class="fadeInTeaser"></div>
   </section>
 
-  <!-- SCROLL SECTION -->
-  <section class="section">
-    <div class="card">
-      <div class="cardTitle">Next</div>
-      <div class="cardBody">
-        More info coming.
-        <div class="muted">Add roadmap, how to buy, tokenomics, etc.</div>
-      </div>
-    </div>
-  </section>
+  <!-- NUR BACKGROUND SPACE (kein Text, keine Card) -->
+  <div class="space"></div>
+  <div class="bottomBoost"></div>
 
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
-
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
     const status = document.getElementById("copyStatus");
     contractFull.textContent = CONTRACT;
 
     async function copyText(text){
-      if (navigator.clipboard && window.isSecureContext) {
-        return navigator.clipboard.writeText(text);
-      }
+      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
       const ta=document.createElement("textarea");
       ta.value=text; ta.style.position="fixed"; ta.style.left="-9999px";
       document.body.appendChild(ta); ta.select();
