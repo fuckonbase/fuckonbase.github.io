@@ -6,9 +6,7 @@
   <title>fuckonbase</title>
 
   <style>
-    :root{
-      --royal: 30, 60, 200;
-    }
+    :root{ --royal: 30, 60, 200; }
 
     body{
       margin:0;
@@ -18,44 +16,37 @@
       overflow-x:hidden;
     }
 
-    /* ================= BACKGROUND ================= */
-    .bg{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:-1;
+    /* ========== HERO ========== */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      position:relative;
+      text-align:center;
+      background:#000;
     }
-    .bg::before{
-      content:"";
+
+    .fadeInTeaser{
       position:absolute;
-      inset:-20%;
-      background:
-        radial-gradient(600px 300px at 20% 85%, rgba(var(--royal),0.20), transparent 60%),
-        radial-gradient(700px 350px at 80% 90%, rgba(var(--royal),0.16), transparent 62%),
-        radial-gradient(900px 500px at 50% 120%, rgba(var(--royal),0.18), transparent 60%);
-      filter: blur(18px);
+      left:0; right:0; bottom:0;
+      height:180px;
+      background: linear-gradient(to top,
+        rgba(var(--royal),0.10),
+        rgba(var(--royal),0.04),
+        rgba(0,0,0,0));
+      opacity:0.35;
+      pointer-events:none;
     }
 
-    /* ================= ANIMATIONS ================= */
-    @keyframes glowPulse {
-      0% {
-        box-shadow:
-          0 0 14px rgba(var(--royal),0.35),
-          0 0 28px rgba(var(--royal),0.20);
-      }
-      50% {
-        box-shadow:
-          0 0 26px rgba(var(--royal),0.65),
-          0 0 52px rgba(var(--royal),0.35);
-      }
-      100% {
-        box-shadow:
-          0 0 14px rgba(var(--royal),0.35),
-          0 0 28px rgba(var(--royal),0.20);
-      }
+    @keyframes glowPulse{
+      0%{ box-shadow:0 0 14px rgba(var(--royal),0.35),0 0 28px rgba(var(--royal),0.20); }
+      50%{ box-shadow:0 0 26px rgba(var(--royal),0.65),0 0 52px rgba(var(--royal),0.35); }
+      100%{ box-shadow:0 0 14px rgba(var(--royal),0.35),0 0 28px rgba(var(--royal),0.20); }
     }
 
-    /* ================= SOCIAL ICONS ================= */
+    /* ========== SOCIAL ICONS ========== */
     .social{
       width:44px;
       height:44px;
@@ -64,17 +55,15 @@
       justify-content:center;
       border:1px solid rgba(255,255,255,0.25);
       border-radius:12px;
-      transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
     }
     .social:hover{
       transform: scale(1.15);
       border-color: rgba(var(--royal),0.9);
-      box-shadow:
-        0 0 12px rgba(var(--royal),0.6),
-        0 0 24px rgba(var(--royal),0.4);
+      box-shadow:0 0 12px rgba(var(--royal),0.6),0 0 24px rgba(var(--royal),0.4);
     }
 
-    /* ================= CONTRACT ================= */
+    /* ========== CONTRACT ========== */
     .copyWrap{
       margin-top:48px;
       display:flex;
@@ -82,8 +71,6 @@
       align-items:center;
       gap:8px;
     }
-
-    /* RAHMEN NUR UM CONTRACT */
     .contractBox{
       border:1px solid rgba(255,255,255,0.22);
       border-radius:12px;
@@ -91,96 +78,108 @@
       max-width:92vw;
       background: rgba(255,255,255,0.03);
       cursor:pointer;
-      transition: box-shadow 0.25s ease, border-color 0.25s ease;
+      transition: box-shadow .25s ease, border-color .25s ease;
     }
-
-    /* HOVER OHNE BEWEGUNG */
     .contractBox:hover{
       border-color: rgba(var(--royal),0.9);
-      box-shadow:
-        0 0 10px rgba(var(--royal),0.45),
-        0 0 22px rgba(var(--royal),0.28);
+      box-shadow:0 0 10px rgba(var(--royal),0.45),0 0 22px rgba(var(--royal),0.28);
     }
-
-    .contractLabel{
-      font-size:12px;
-      opacity:0.65;
-      margin-bottom:4px;
-    }
-
+    .contractLabel{ font-size:12px; opacity:.65; margin-bottom:4px; }
     .contractFull{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size:12px;
       word-break: break-all;
     }
-
-    /* COPIED STATUS AUSSERHALB */
     .status{
       font-size:12px;
       opacity:0;
       display:flex;
       align-items:center;
       gap:6px;
-      transition: opacity 0.25s ease;
+      transition: opacity .25s ease;
     }
-    .status.show{
-      opacity:0.9;
-    }
+    .status.show{ opacity:.9; }
     .check{
-      width:14px;
-      height:14px;
-      border-radius:999px;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+      width:14px;height:14px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
       border:1px solid rgba(var(--royal),0.9);
-      box-shadow: 0 0 8px rgba(var(--royal),0.45);
+      box-shadow:0 0 8px rgba(var(--royal),0.45);
       font-size:11px;
     }
 
-    /* ================= LAYOUT ================= */
-    .hero{
-      min-height:100vh;
+    /* ========== SCROLL HINT ========== */
+    @keyframes scrollHint{
+      0%{ transform:translateY(0); opacity:.55; }
+      50%{ transform:translateY(8px); opacity:.9; }
+      100%{ transform:translateY(0); opacity:.55; }
+    }
+    .scrollHint{
+      position:absolute;
+      bottom:26px;
+      left:50%;
+      transform:translateX(-50%);
       display:flex;
+      flex-direction:column;
       align-items:center;
+      gap:8px;
+      pointer-events:none;
+    }
+    .scrollText{ font-size:12px; letter-spacing:1.6px; opacity:.55; }
+    .scrollDot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(var(--royal),0.75);
+      box-shadow:0 0 10px rgba(var(--royal),0.35);
+      animation: scrollHint 1.8s ease-in-out infinite;
+    }
+
+    /* ========== SCROLL SECTION ========== */
+    .section{
+      min-height:140vh;
+      padding:100px 24px;
+      display:flex;
       justify-content:center;
-      padding:24px;
-      text-align:center;
+      background:#000;
       position:relative;
+    }
+    .card{
+      width:min(820px,100%);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px;
+      background: rgba(255,255,255,0.03);
+      box-shadow:0 0 18px rgba(var(--royal),0.10),0 0 50px rgba(var(--royal),0.06);
+      padding:26px;
     }
   </style>
 </head>
 
 <body>
-  <div class="bg"></div>
 
   <section class="hero">
     <div>
-
-      <img src="bild.jpg?v=20"
+      <img src="bild.jpg?v=22"
            alt="fuckonbase"
-           style="
-             width:300px;
-             max-width:85vw;
-             border-radius:14px;
-             margin-bottom:28px;
-             animation: glowPulse 4s ease-in-out infinite;
-           ">
+           style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 4s ease-in-out infinite;">
 
-      <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
+      <div style="font-size:16px;letter-spacing:1.5px;margin-bottom:28px;opacity:.75;">
         coming soon
       </div>
 
-      <!-- SOCIALS -->
-      <div style="display:flex; gap:14px; justify-content:center;">
+      <!-- SOCIAL ICONS -->
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
         <a class="social" href="https://x.com/fuck_on_base" target="_blank">
-          <img src="x.png?v=20" style="width:20px;">
+          <img src="x.png?v=22" style="width:20px;">
         </a>
+
         <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank">
-          <img src="dex.png?v=20" style="width:20px;">
+          <img src="dex.png?v=22" style="width:20px;">
         </a>
+
+        <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank">
+          <img src="gecko.png?v=22" style="width:20px;">
+        </a>
+
         <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank">
-          <img src="tg.png?v=20" style="width:20px;">
+          <img src="tg.png?v=22" style="width:20px;">
         </a>
       </div>
 
@@ -190,46 +189,52 @@
           <div class="contractLabel">Contract</div>
           <div class="contractFull" id="contractFull"></div>
         </div>
-
         <div class="status" id="copyStatus">
-          <span class="check">✓</span>
-          copied
+          <span class="check">✓</span> copied
         </div>
       </div>
+    </div>
 
+    <div class="scrollHint">
+      <div class="scrollText">scroll</div>
+      <div class="scrollDot"></div>
+    </div>
+
+    <div class="fadeInTeaser"></div>
+  </section>
+
+  <section class="section">
+    <div class="card">
+      More content coming here.
     </div>
   </section>
 
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
-
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
     const status = document.getElementById("copyStatus");
 
     contractFull.textContent = CONTRACT;
 
-    async function copyText(text){
+    async function copyText(t){
       if (navigator.clipboard && window.isSecureContext) {
-        return navigator.clipboard.writeText(text);
+        return navigator.clipboard.writeText(t);
       }
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.left = "-9999px";
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
+      const ta=document.createElement("textarea");
+      ta.value=t; ta.style.position="fixed"; ta.style.left="-9999px";
+      document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
     }
 
-    let t;
-    copyBtn.addEventListener("click", async () => {
+    let timer;
+    copyBtn.addEventListener("click", async ()=>{
       await copyText(CONTRACT);
       status.classList.add("show");
-      clearTimeout(t);
-      t = setTimeout(() => status.classList.remove("show"), 1200);
+      clearTimeout(timer);
+      timer=setTimeout(()=>status.classList.remove("show"),1200);
     });
   </script>
+
 </body>
 </html>
