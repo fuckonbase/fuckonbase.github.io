@@ -50,7 +50,7 @@
 
     /* Copy Button */
     .copyWrap{
-      margin-top:20px;
+      margin-top:42px; /* MEHR PLATZ ZU DEN SOCIALS */
       display:flex;
       justify-content:center;
     }
@@ -58,15 +58,16 @@
       display:flex;
       align-items:center;
       gap:10px;
-      padding:10px 14px;
+      padding:12px 14px;
       border-radius:12px;
       border:1px solid rgba(255,255,255,0.22);
       background: rgba(255,255,255,0.03);
       color:#fff;
       font-size:13px;
-      letter-spacing:0.3px;
+      letter-spacing:0.2px;
       cursor:pointer;
       user-select:none;
+      max-width: 92vw;
       transition:
         transform 0.2s ease,
         box-shadow 0.25s ease,
@@ -80,9 +81,18 @@
         0 0 22px rgba(30, 60, 200, 0.28);
     }
 
-    .pill{
+    .label{
+      opacity:0.75;
+      white-space:nowrap;
+    }
+
+    /* Voller Contract, aber sauber umbrechen auf Mobile */
+    .contractFull{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      opacity:0.9;
+      font-size:12px;
+      opacity:0.95;
+      word-break: break-all;
+      text-align:left;
     }
 
     .status{
@@ -92,6 +102,7 @@
       opacity:0;
       transform: translateY(2px);
       transition: opacity 0.25s ease, transform 0.25s ease;
+      white-space:nowrap;
     }
     .status.show{
       opacity:1;
@@ -126,7 +137,7 @@
   <div style="text-align:center; padding:24px;">
 
     <!-- LOGO -->
-    <img src="bild.jpg?v=17"
+    <img src="bild.jpg?v=18"
          alt="fuckonbase"
          style="
            width:300px;
@@ -156,25 +167,25 @@
       margin-top:10px;
     ">
       <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-        <img src="x.png?v=17" alt="X" style="width:20px; height:20px;">
+        <img src="x.png?v=18" alt="X" style="width:20px; height:20px;">
       </a>
 
       <a class="social"
          href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e"
          target="_blank" rel="noopener noreferrer">
-        <img src="dex.png?v=17" alt="Dexscreener" style="width:20px; height:20px;">
+        <img src="dex.png?v=18" alt="Dexscreener" style="width:20px; height:20px;">
       </a>
 
       <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-        <img src="tg.png?v=17" alt="Telegram" style="width:20px; height:20px;">
+        <img src="tg.png?v=18" alt="Telegram" style="width:20px; height:20px;">
       </a>
     </div>
 
     <!-- CONTRACT COPY -->
     <div class="copyWrap">
-      <button class="copyBtn" id="copyBtn" type="button">
-        <span style="opacity:0.75;">Contract</span>
-        <span class="pill" id="contractShort"></span>
+      <button class="copyBtn" id="copyBtn" type="button" aria-label="Copy contract address">
+        <span class="label">Contract</span>
+        <span class="contractFull" id="contractFull"></span>
         <span class="status" id="copyStatus">
           <span class="check">✓</span>
           <span style="opacity:0.9;">copied</span>
@@ -187,13 +198,11 @@
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
 
-    const short = (addr) => addr.slice(0,6) + "…" + addr.slice(-4);
-
-    const contractShort = document.getElementById("contractShort");
+    const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
     const status = document.getElementById("copyStatus");
 
-    contractShort.textContent = short(CONTRACT);
+    contractFull.textContent = CONTRACT;
 
     async function copyText(text) {
       if (navigator.clipboard && window.isSecureContext) {
