@@ -6,7 +6,9 @@
   <title>fuckonbase</title>
 
   <style>
-    :root{ --royal: 30, 60, 200; }
+    :root{
+      --royal: 30, 60, 200; /* Basis-Farbe (Königsblau) */
+    }
 
     body{
       margin:0;
@@ -16,8 +18,8 @@
       overflow-x:hidden;
     }
 
-    /* ================= GLOBAL BG (überall) ================= */
-    .globalBg{
+    /* ============ ONE CONTINUOUS BACKGROUND (professionell, space) ============ */
+    .bg{
       position:fixed;
       inset:0;
       z-index:-1;
@@ -25,192 +27,284 @@
       overflow:hidden;
     }
 
-    .globalBg::before{
+    /* Subtile Space-Glows (weniger “massiv”) */
+    .bg::before{
       content:"";
       position:absolute;
-      inset:-25%;
+      inset:-30%;
       background:
-        radial-gradient(1000px 600px at 20% 80%, rgba(var(--royal),0.28), transparent 62%),
-        radial-gradient(1000px 600px at 80% 85%, rgba(var(--royal),0.26), transparent 64%),
-        radial-gradient(1400px 800px at 50% 115%, rgba(var(--royal),0.24), transparent 62%),
-        radial-gradient(900px 520px at 50% 20%, rgba(var(--royal),0.12), transparent 70%);
-      filter: blur(18px);
+        radial-gradient(900px 520px at 18% 85%, rgba(var(--royal),0.12), transparent 60%),
+        radial-gradient(950px 560px at 82% 88%, rgba(var(--royal),0.10), transparent 62%),
+        radial-gradient(1200px 700px at 50% 120%, rgba(var(--royal),0.09), transparent 62%),
+        radial-gradient(700px 420px at 50% 10%, rgba(var(--royal),0.05), transparent 70%);
+      filter: blur(22px);
       opacity:1;
     }
 
-    .globalBg::after{
+    /* Sehr feines, professionelles Noise/Grid Gefühl (nicht “Lines”) */
+    .bg::after{
       content:"";
       position:absolute;
       inset:0;
       background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(var(--royal),0.07) 0px,
-          rgba(var(--royal),0.07) 1px,
-          transparent 1px,
-          transparent 90px
-        ),
-        repeating-linear-gradient(
-          0deg,
-          rgba(var(--royal),0.06) 0px,
-          rgba(var(--royal),0.06) 1px,
-          transparent 1px,
-          transparent 90px
-        );
-      opacity:0.30;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.20) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
-      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.20) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
+        radial-gradient(1200px 800px at 50% 60%, rgba(var(--royal),0.05), transparent 65%),
+        radial-gradient(900px 600px at 20% 30%, rgba(var(--royal),0.03), transparent 70%),
+        radial-gradient(900px 600px at 80% 40%, rgba(var(--royal),0.03), transparent 70%);
+      opacity:0.9;
     }
 
-    /* Light beams */
+    /* Soft Light Beams (sehr weich, langsam) */
     .beam{
       position:absolute;
-      width:560px;
-      height:1300px;
-      top:60%;
+      width:520px;
+      height:1400px;
+      top:70%;
       left:50%;
-      transform: translate(-50%,-50%) rotate(18deg);
-      background: linear-gradient(to bottom, rgba(var(--royal),0.00), rgba(var(--royal),0.14), rgba(var(--royal),0.00));
-      filter: blur(18px);
-      opacity:0.70;
-      animation: beamMove 10s ease-in-out infinite;
+      transform: translate(-50%,-50%) rotate(16deg);
+      background: linear-gradient(to bottom,
+        rgba(var(--royal),0.00),
+        rgba(var(--royal),0.06),
+        rgba(var(--royal),0.00)
+      );
+      filter: blur(26px);
+      opacity:0.55;
+      animation: beamMove 18s ease-in-out infinite;
     }
     .beam.b2{
-      width:460px;
-      height:1200px;
-      top:58%;
-      transform: translate(-50%,-50%) rotate(-22deg);
-      opacity:0.60;
-      animation: beamMove2 12s ease-in-out infinite;
+      width:420px;
+      height:1300px;
+      top:68%;
+      transform: translate(-50%,-50%) rotate(-18deg);
+      opacity:0.45;
+      animation: beamMove2 22s ease-in-out infinite;
     }
     @keyframes beamMove{
-      0%{ transform: translate(-52%,-52%) rotate(18deg); opacity:0.55; }
-      50%{ transform: translate(-48%,-50%) rotate(23deg); opacity:0.90; }
-      100%{ transform: translate(-52%,-52%) rotate(18deg); opacity:0.55; }
+      0%   { transform: translate(-52%,-52%) rotate(14deg); opacity:0.40; }
+      50%  { transform: translate(-48%,-50%) rotate(18deg); opacity:0.65; }
+      100% { transform: translate(-52%,-52%) rotate(14deg); opacity:0.40; }
     }
     @keyframes beamMove2{
-      0%{ transform: translate(-48%,-52%) rotate(-22deg); opacity:0.50; }
-      50%{ transform: translate(-52%,-50%) rotate(-17deg); opacity:0.85; }
-      100%{ transform: translate(-48%,-52%) rotate(-22deg); opacity:0.50; }
+      0%   { transform: translate(-48%,-52%) rotate(-20deg); opacity:0.35; }
+      50%  { transform: translate(-52%,-50%) rotate(-16deg); opacity:0.58; }
+      100% { transform: translate(-48%,-52%) rotate(-20deg); opacity:0.35; }
     }
 
-    /* Particles rising */
-    .particle{
+    /* ============ DUST PARTICLES (feiner Staub, langsam, professionell) ============ */
+    .dust{
       position:absolute;
-      width:4px;
-      height:4px;
+      width:2px;
+      height:2px;
       border-radius:999px;
-      background: rgba(var(--royal),0.92);
-      box-shadow: 0 0 14px rgba(var(--royal),0.62), 0 0 36px rgba(var(--royal),0.22);
-      opacity:0.78;
-      animation: rise var(--dur) linear infinite;
+      background: rgba(255,255,255,0.20);
+      box-shadow:
+        0 0 10px rgba(var(--royal),0.10),
+        0 0 24px rgba(var(--royal),0.06);
+      opacity:0.0;
+      animation: drift var(--dur) linear infinite;
+      transform: translate3d(0,0,0);
     }
-    .particle.s2{ width:3px; height:3px; opacity:0.68; }
-    .particle.s3{ width:5px; height:5px; opacity:0.82; }
+    .dust.d2{ width:1px; height:1px; opacity:0.0; }
+    .dust.d3{ width:3px; height:3px; opacity:0.0; background: rgba(255,255,255,0.16); }
 
-    @keyframes rise{
-      0%{ transform: translate3d(0, 70px, 0); opacity:0; }
-      12%{ opacity:0.85; }
-      90%{ opacity:0.85; }
-      100%{ transform: translate3d(var(--dx), calc(-120vh - 140px), 0); opacity:0; }
+    @keyframes drift{
+      0%{
+        transform: translate3d(0, 60px, 0);
+        opacity:0;
+      }
+      12%{ opacity:0.55; }
+      88%{ opacity:0.55; }
+      100%{
+        transform: translate3d(var(--dx), calc(-140vh - 180px), 0);
+        opacity:0;
+      }
     }
 
-    /* ================= HERO ================= */
+    /* ============ PAGE LAYOUT (eine lange Seite, fließend) ============ */
     .hero{
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:24px;
-      position:relative;
       text-align:center;
-      background:#000;
+      position:relative;
     }
 
-    /* Schwarz oben behalten: überdeckt den BG etwas (Hero-Vignette) */
+    /* Der Hero bleibt oben dunkler (Vignette) – aber ohne “Cut” */
     .heroVignette{
       position:absolute;
       inset:0;
       background:
-        radial-gradient(900px 520px at 50% 40%, rgba(0,0,0,0.88), rgba(0,0,0,0.98) 65%),
-        linear-gradient(to bottom, rgba(0,0,0,0.98), rgba(0,0,0,0.92));
+        radial-gradient(1000px 600px at 50% 40%, rgba(0,0,0,0.92), rgba(0,0,0,0.985) 70%),
+        linear-gradient(to bottom, rgba(0,0,0,0.98), rgba(0,0,0,0.80) 65%, rgba(0,0,0,0.55));
       pointer-events:none;
       z-index:1;
     }
 
-    /* unten Teaser */
-    .fadeInTeaser{
+    /* Sehr weicher Übergang nach unten */
+    .heroFadeBottom{
       position:absolute;
       left:0; right:0; bottom:0;
-      height:260px;
-      background: linear-gradient(to top, rgba(var(--royal),0.22), rgba(var(--royal),0.10), rgba(0,0,0,0));
-      opacity:0.65;
+      height:320px;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.08) 30%,
+        rgba(0,0,0,0.18) 60%,
+        rgba(0,0,0,0.30) 100%);
       pointer-events:none;
       z-index:2;
     }
 
     /* Scroll hint */
-    @keyframes scrollHint{ 0%{transform:translateY(0);opacity:.55}50%{transform:translateY(8px);opacity:.95}100%{transform:translateY(0);opacity:.55}}
-    .scrollHint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;z-index:4}
-    .scrollText{font-size:12px;letter-spacing:1.6px;opacity:.65;text-transform:uppercase}
-    .scrollDot{width:10px;height:10px;border-radius:999px;background:rgba(var(--royal),0.95);box-shadow:0 0 16px rgba(var(--royal),0.60);animation:scrollHint 1.8s ease-in-out infinite}
-
-    /* Logo glow */
-    @keyframes glowPulse{0%{box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22)}50%{box-shadow:0 0 34px rgba(var(--royal),0.78),0 0 70px rgba(var(--royal),0.38)}100%{box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22)}}
-
-    /* Social icons */
-    .social{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.25);border-radius:12px;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;text-decoration:none;background:rgba(255,255,255,0.02)}
-    .social:hover{transform:scale(1.15);border-color:rgba(var(--royal),0.95);box-shadow:0 0 16px rgba(var(--royal),0.75),0 0 34px rgba(var(--royal),0.42)}
-
-    /* Contract */
-    .copyWrap{margin-top:52px;display:flex;flex-direction:column;align-items:center;gap:10px}
-    .contractBox{border:1px solid rgba(255,255,255,0.22);border-radius:12px;padding:12px 14px;max-width:92vw;background:rgba(255,255,255,0.03);cursor:pointer;transition:box-shadow .25s ease,border-color .25s ease}
-    .contractBox:hover{border-color:rgba(var(--royal),0.95);box-shadow:0 0 14px rgba(var(--royal),0.60),0 0 34px rgba(var(--royal),0.30)}
-    .contractLabel{font-size:12px;opacity:.70;margin-bottom:4px}
-    .contractFull{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;word-break:break-all}
-    .status{font-size:12px;opacity:0;display:flex;align-items:center;gap:6px;transition:opacity .25s ease}
-    .status.show{opacity:.95}
-    .check{width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid rgba(var(--royal),0.95);box-shadow:0 0 10px rgba(var(--royal),0.55);font-size:11px}
-
-    /* ================= EMPTY SCROLL AREA (nur Background) ================= */
-    .space{
-      min-height:180vh; /* viel Scroll */
-      background: transparent; /* nur Background zeigen */
+    @keyframes scrollHint{
+      0%{ transform: translateY(0); opacity:0.55; }
+      50%{ transform: translateY(8px); opacity:0.90; }
+      100%{ transform: translateY(0); opacity:0.55; }
+    }
+    .scrollHint{
+      position:absolute;
+      bottom:26px;
+      left:50%;
+      transform: translateX(-50%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      pointer-events:none;
+      z-index:3;
+    }
+    .scrollText{
+      font-size:12px;
+      letter-spacing:1.6px;
+      opacity:0.55;
+      text-transform:uppercase;
+    }
+    .scrollDot{
+      width:10px;
+      height:10px;
+      border-radius:999px;
+      background: rgba(var(--royal),0.55);
+      box-shadow: 0 0 14px rgba(var(--royal),0.20);
+      animation: scrollHint 1.8s ease-in-out infinite;
     }
 
-    /* ganz unten nochmal etwas “Boost”, damit’s richtig knallt */
-    .bottomBoost{
-      height:260px;
-      background: radial-gradient(900px 520px at 50% 50%, rgba(var(--royal),0.20), transparent 70%);
-      filter: blur(14px);
+    /* Logo glow bleibt königsblau, aber etwas cleaner */
+    @keyframes glowPulse{
+      0%{ box-shadow:0 0 14px rgba(var(--royal),0.28), 0 0 30px rgba(var(--royal),0.14); }
+      50%{ box-shadow:0 0 28px rgba(var(--royal),0.55), 0 0 60px rgba(var(--royal),0.22); }
+      100%{ box-shadow:0 0 14px rgba(var(--royal),0.28), 0 0 30px rgba(var(--royal),0.14); }
+    }
+
+    /* Social icons */
+    .social{
+      width:44px;height:44px;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,0.22);
+      border-radius:12px;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      text-decoration:none;
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .social:hover{
+      transform: scale(1.12);
+      border-color: rgba(var(--royal),0.65);
+      box-shadow: 0 0 14px rgba(var(--royal),0.22), 0 0 34px rgba(var(--royal),0.12);
+    }
+
+    /* Contract */
+    .copyWrap{
+      margin-top:52px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+    }
+    .contractBox{
+      border:1px solid rgba(255,255,255,0.20);
+      border-radius:12px;
+      padding:12px 14px;
+      max-width:92vw;
+      background: rgba(255,255,255,0.02);
+      cursor:pointer;
+      transition: box-shadow .25s ease, border-color .25s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .contractBox:hover{
+      border-color: rgba(var(--royal),0.60);
+      box-shadow: 0 0 16px rgba(var(--royal),0.22), 0 0 40px rgba(var(--royal),0.12);
+    }
+    .contractLabel{ font-size:12px; opacity:0.65; margin-bottom:4px; }
+    .contractFull{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size:12px;
+      word-break: break-all;
       opacity:0.95;
-      pointer-events:none;
+    }
+    .status{
+      font-size:12px;
+      opacity:0;
+      display:flex;
+      align-items:center;
+      gap:6px;
+      transition: opacity .25s ease;
+    }
+    .status.show{ opacity:0.85; }
+    .check{
+      width:14px;height:14px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(var(--royal),0.55);
+      box-shadow: 0 0 10px rgba(var(--royal),0.18);
+      font-size:11px;
+    }
+
+    /* Lange Scroll-Fläche (kein Cut, kein extra Background) */
+    .space{
+      min-height:220vh;
     }
   </style>
 </head>
 
 <body>
-  <div class="globalBg">
+  <div class="bg">
     <div class="beam"></div>
     <div class="beam b2"></div>
 
-    <!-- viele Partikel -->
-    <span class="particle s3" style="left:6%;  bottom:-30px; --dx: 12px; --dur: 14s;"></span>
-    <span class="particle s2" style="left:10%; bottom:-120px; --dx:-18px; --dur: 18s;"></span>
-    <span class="particle"    style="left:16%; bottom:-70px; --dx: 10px; --dur: 16s;"></span>
-    <span class="particle s2" style="left:22%; bottom:-160px;--dx: 22px; --dur: 20s;"></span>
-    <span class="particle"    style="left:28%; bottom:-90px; --dx:-14px; --dur: 15s;"></span>
-    <span class="particle s3" style="left:34%; bottom:-180px;--dx: 16px; --dur: 19s;"></span>
-    <span class="particle s2" style="left:40%; bottom:-110px;--dx:-10px; --dur: 17s;"></span>
-    <span class="particle"    style="left:46%; bottom:-220px;--dx: 20px; --dur: 21s;"></span>
-    <span class="particle s2" style="left:52%; bottom:-95px; --dx:-22px; --dur: 16s;"></span>
-    <span class="particle s3" style="left:58%; bottom:-200px;--dx: 14px; --dur: 18s;"></span>
-    <span class="particle"    style="left:64%; bottom:-140px;--dx:-16px; --dur: 20s;"></span>
-    <span class="particle s2" style="left:70%; bottom:-240px;--dx: 18px; --dur: 22s;"></span>
-    <span class="particle s3" style="left:76%; bottom:-130px;--dx:-12px; --dur: 17s;"></span>
-    <span class="particle s2" style="left:82%; bottom:-260px;--dx: 10px; --dur: 19s;"></span>
-    <span class="particle"    style="left:88%; bottom:-170px;--dx:-14px; --dur: 23s;"></span>
-    <span class="particle s3" style="left:94%; bottom:-210px;--dx: 16px; --dur: 25s;"></span>
+    <!-- DUST (fein, langsam) -->
+    <!-- viele kleine Staubpunkte, starten unten und fliegen nach oben -->
+    <span class="dust d2" style="left:6%;  bottom:-40px; --dx: 18px; --dur: 42s;"></span>
+    <span class="dust"    style="left:10%; bottom:-90px; --dx:-22px; --dur: 55s;"></span>
+    <span class="dust d3" style="left:14%; bottom:-60px; --dx: 14px; --dur: 48s;"></span>
+    <span class="dust d2" style="left:18%; bottom:-140px;--dx:-12px; --dur: 62s;"></span>
+    <span class="dust"    style="left:22%; bottom:-70px; --dx: 20px; --dur: 50s;"></span>
+    <span class="dust d2" style="left:26%; bottom:-160px;--dx:-18px; --dur: 66s;"></span>
+    <span class="dust"    style="left:30%; bottom:-110px;--dx: 12px; --dur: 58s;"></span>
+    <span class="dust d2" style="left:34%; bottom:-80px; --dx:-16px; --dur: 46s;"></span>
+    <span class="dust d3" style="left:38%; bottom:-150px;--dx: 24px; --dur: 70s;"></span>
+    <span class="dust"    style="left:42%; bottom:-120px;--dx:-14px; --dur: 52s;"></span>
+    <span class="dust d2" style="left:46%; bottom:-170px;--dx: 16px; --dur: 64s;"></span>
+    <span class="dust"    style="left:50%; bottom:-60px; --dx:-20px; --dur: 44s;"></span>
+    <span class="dust d2" style="left:54%; bottom:-130px;--dx: 10px; --dur: 60s;"></span>
+    <span class="dust d3" style="left:58%; bottom:-95px; --dx:-24px; --dur: 68s;"></span>
+    <span class="dust"    style="left:62%; bottom:-180px;--dx: 18px; --dur: 72s;"></span>
+    <span class="dust d2" style="left:66%; bottom:-75px; --dx:-12px; --dur: 48s;"></span>
+    <span class="dust"    style="left:70%; bottom:-150px;--dx: 22px; --dur: 66s;"></span>
+    <span class="dust d2" style="left:74%; bottom:-110px;--dx:-16px; --dur: 54s;"></span>
+    <span class="dust d3" style="left:78%; bottom:-170px;--dx: 14px; --dur: 70s;"></span>
+    <span class="dust"    style="left:82%; bottom:-85px; --dx:-22px; --dur: 56s;"></span>
+    <span class="dust d2" style="left:86%; bottom:-140px;--dx: 12px; --dur: 62s;"></span>
+    <span class="dust"    style="left:90%; bottom:-65px; --dx:-18px; --dur: 46s;"></span>
+    <span class="dust d2" style="left:94%; bottom:-160px;--dx: 20px; --dur: 68s;"></span>
+
+    <!-- extra density (more dust) -->
+    <span class="dust d2" style="left:8%;  bottom:-200px;--dx: 12px; --dur: 74s;"></span>
+    <span class="dust"    style="left:24%; bottom:-210px;--dx:-14px; --dur: 78s;"></span>
+    <span class="dust d2" style="left:36%; bottom:-230px;--dx: 10px; --dur: 82s;"></span>
+    <span class="dust"    style="left:60%; bottom:-240px;--dx:-12px; --dur: 80s;"></span>
+    <span class="dust d2" style="left:72%; bottom:-220px;--dx: 14px; --dur: 76s;"></span>
+    <span class="dust"    style="left:88%; bottom:-250px;--dx:-10px; --dur: 84s;"></span>
   </div>
 
   <!-- HERO -->
@@ -218,7 +312,7 @@
     <div class="heroVignette"></div>
 
     <div style="position:relative; z-index:3;">
-      <img src="bild.jpg?v=26"
+      <img src="bild.jpg?v=27"
            alt="fuckonbase"
            style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 4s ease-in-out infinite;">
 
@@ -228,16 +322,16 @@
 
       <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
         <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-          <img src="x.png?v=26" alt="X" style="width:20px;height:20px;">
+          <img src="x.png?v=27" alt="X" style="width:20px;height:20px;">
         </a>
         <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="dex.png?v=26" alt="Dexscreener" style="width:20px;height:20px;">
+          <img src="dex.png?v=27" alt="Dexscreener" style="width:20px;height:20px;">
         </a>
         <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="gecko.png?v=26" alt="GeckoTerminal" style="width:20px;height:20px;">
+          <img src="gecko.png?v=27" alt="GeckoTerminal" style="width:20px;height:20px;">
         </a>
         <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-          <img src="tg.png?v=26" alt="Telegram" style="width:20px;height:20px;">
+          <img src="tg.png?v=27" alt="Telegram" style="width:20px;height:20px;">
         </a>
       </div>
 
@@ -257,12 +351,11 @@
       <div class="scrollDot"></div>
     </div>
 
-    <div class="fadeInTeaser"></div>
+    <div class="heroFadeBottom"></div>
   </section>
 
-  <!-- NUR BACKGROUND SPACE (kein Text, keine Card) -->
+  <!-- LANGE FLÄCHE (nur Background, alles fließend) -->
   <div class="space"></div>
-  <div class="bottomBoost"></div>
 
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
