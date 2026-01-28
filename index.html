@@ -6,27 +6,57 @@
   <title>fuckonbase</title>
 
   <style>
-    /* Pulsierender Königsblau-Glow fürs Logo */
+    :root{
+      --royal: 30, 60, 200;
+    }
+
+    body{
+      margin:0;
+      background:#000;
+      color:#fff;
+      font-family:Arial, sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* ================= BACKGROUND ================= */
+    .bg{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:-1;
+    }
+    .bg::before{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:
+        radial-gradient(600px 300px at 20% 85%, rgba(var(--royal),0.20), transparent 60%),
+        radial-gradient(700px 350px at 80% 90%, rgba(var(--royal),0.16), transparent 62%),
+        radial-gradient(900px 500px at 50% 120%, rgba(var(--royal),0.18), transparent 60%);
+      filter: blur(18px);
+    }
+
+    /* ================= ANIMATIONS ================= */
     @keyframes glowPulse {
       0% {
         box-shadow:
-          0 0 14px rgba(30, 60, 200, 0.35),
-          0 0 28px rgba(30, 60, 200, 0.20);
+          0 0 14px rgba(var(--royal),0.35),
+          0 0 28px rgba(var(--royal),0.20);
       }
       50% {
         box-shadow:
-          0 0 26px rgba(30, 60, 200, 0.65),
-          0 0 52px rgba(30, 60, 200, 0.35);
+          0 0 26px rgba(var(--royal),0.65),
+          0 0 52px rgba(var(--royal),0.35);
       }
       100% {
         box-shadow:
-          0 0 14px rgba(30, 60, 200, 0.35),
-          0 0 28px rgba(30, 60, 200, 0.20);
+          0 0 14px rgba(var(--royal),0.35),
+          0 0 28px rgba(var(--royal),0.20);
       }
     }
 
-    /* Social Icons Hover */
-    .social {
+    /* ================= SOCIAL ICONS ================= */
+    .social{
       width:44px;
       height:44px;
       display:flex;
@@ -34,81 +64,68 @@
       justify-content:center;
       border:1px solid rgba(255,255,255,0.25);
       border-radius:12px;
-      text-decoration:none;
-      transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
     }
-    .social:hover {
+    .social:hover{
       transform: scale(1.15);
-      border-color: rgba(30, 60, 200, 0.9);
+      border-color: rgba(var(--royal),0.9);
       box-shadow:
-        0 0 12px rgba(30, 60, 200, 0.6),
-        0 0 24px rgba(30, 60, 200, 0.4);
+        0 0 12px rgba(var(--royal),0.6),
+        0 0 24px rgba(var(--royal),0.4);
     }
 
-    /* Copy Button */
+    /* ================= CONTRACT ================= */
     .copyWrap{
-      margin-top:42px; /* MEHR PLATZ ZU DEN SOCIALS */
+      margin-top:48px;
       display:flex;
-      justify-content:center;
-    }
-    .copyBtn{
-      display:flex;
+      flex-direction:column;
       align-items:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius:12px;
+      gap:8px;
+    }
+
+    /* RAHMEN NUR UM CONTRACT */
+    .contractBox{
       border:1px solid rgba(255,255,255,0.22);
+      border-radius:12px;
+      padding:12px 14px;
+      max-width:92vw;
       background: rgba(255,255,255,0.03);
-      color:#fff;
-      font-size:13px;
-      letter-spacing:0.2px;
       cursor:pointer;
-      user-select:none;
-      max-width: 92vw;
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
     }
-    .copyBtn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(30, 60, 200, 0.85);
+
+    /* HOVER OHNE BEWEGUNG */
+    .contractBox:hover{
+      border-color: rgba(var(--royal),0.9);
       box-shadow:
-        0 0 10px rgba(30, 60, 200, 0.45),
-        0 0 22px rgba(30, 60, 200, 0.28);
+        0 0 10px rgba(var(--royal),0.45),
+        0 0 22px rgba(var(--royal),0.28);
     }
 
-    .label{
-      opacity:0.75;
-      white-space:nowrap;
-    }
-
-    /* Voller Contract, aber sauber umbrechen auf Mobile */
-    .contractFull{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    .contractLabel{
       font-size:12px;
-      opacity:0.95;
-      word-break: break-all;
-      text-align:left;
+      opacity:0.65;
+      margin-bottom:4px;
     }
 
+    .contractFull{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size:12px;
+      word-break: break-all;
+    }
+
+    /* COPIED STATUS AUSSERHALB */
     .status{
-      display:inline-flex;
+      font-size:12px;
+      opacity:0;
+      display:flex;
       align-items:center;
       gap:6px;
-      opacity:0;
-      transform: translateY(2px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      white-space:nowrap;
+      transition: opacity 0.25s ease;
     }
     .status.show{
-      opacity:1;
-      transform: translateY(0);
+      opacity:0.9;
     }
-
     .check{
       width:14px;
       height:14px;
@@ -116,84 +133,72 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      border:1px solid rgba(30, 60, 200, 0.9);
-      box-shadow: 0 0 8px rgba(30, 60, 200, 0.45);
+      border:1px solid rgba(var(--royal),0.9);
+      box-shadow: 0 0 8px rgba(var(--royal),0.45);
       font-size:11px;
-      line-height:1;
+    }
+
+    /* ================= LAYOUT ================= */
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      text-align:center;
+      position:relative;
     }
   </style>
 </head>
 
-<body style="
-  margin:0;
-  background:black;
-  color:white;
-  font-family:Arial, sans-serif;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
-">
-  <div style="text-align:center; padding:24px;">
+<body>
+  <div class="bg"></div>
 
-    <!-- LOGO -->
-    <img src="bild.jpg?v=18"
-         alt="fuckonbase"
-         style="
-           width:300px;
-           max-width:85vw;
-           border-radius:14px;
-           display:block;
-           margin:0 auto 28px auto;
-           animation: glowPulse 4s ease-in-out infinite;
-         ">
+  <section class="hero">
+    <div>
 
-    <!-- COMING SOON -->
-    <div style="
-      font-size:16px;
-      letter-spacing:1.5px;
-      margin-bottom:28px;
-      opacity:0.75;
-    ">
-      coming soon
-    </div>
+      <img src="bild.jpg?v=20"
+           alt="fuckonbase"
+           style="
+             width:300px;
+             max-width:85vw;
+             border-radius:14px;
+             margin-bottom:28px;
+             animation: glowPulse 4s ease-in-out infinite;
+           ">
 
-    <!-- SOCIAL ICONS -->
-    <div style="
-      display:flex;
-      gap:14px;
-      justify-content:center;
-      align-items:center;
-      margin-top:10px;
-    ">
-      <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-        <img src="x.png?v=18" alt="X" style="width:20px; height:20px;">
-      </a>
+      <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
+        coming soon
+      </div>
 
-      <a class="social"
-         href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e"
-         target="_blank" rel="noopener noreferrer">
-        <img src="dex.png?v=18" alt="Dexscreener" style="width:20px; height:20px;">
-      </a>
+      <!-- SOCIALS -->
+      <div style="display:flex; gap:14px; justify-content:center;">
+        <a class="social" href="https://x.com/fuck_on_base" target="_blank">
+          <img src="x.png?v=20" style="width:20px;">
+        </a>
+        <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank">
+          <img src="dex.png?v=20" style="width:20px;">
+        </a>
+        <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank">
+          <img src="tg.png?v=20" style="width:20px;">
+        </a>
+      </div>
 
-      <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-        <img src="tg.png?v=18" alt="Telegram" style="width:20px; height:20px;">
-      </a>
-    </div>
+      <!-- CONTRACT -->
+      <div class="copyWrap">
+        <div class="contractBox" id="copyBtn">
+          <div class="contractLabel">Contract</div>
+          <div class="contractFull" id="contractFull"></div>
+        </div>
 
-    <!-- CONTRACT COPY -->
-    <div class="copyWrap">
-      <button class="copyBtn" id="copyBtn" type="button" aria-label="Copy contract address">
-        <span class="label">Contract</span>
-        <span class="contractFull" id="contractFull"></span>
-        <span class="status" id="copyStatus">
+        <div class="status" id="copyStatus">
           <span class="check">✓</span>
-          <span style="opacity:0.9;">copied</span>
-        </span>
-      </button>
-    </div>
+          copied
+        </div>
+      </div>
 
-  </div>
+    </div>
+  </section>
 
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
@@ -204,7 +209,7 @@
 
     contractFull.textContent = CONTRACT;
 
-    async function copyText(text) {
+    async function copyText(text){
       if (navigator.clipboard && window.isSecureContext) {
         return navigator.clipboard.writeText(text);
       }
@@ -213,7 +218,6 @@
       ta.style.position = "fixed";
       ta.style.left = "-9999px";
       document.body.appendChild(ta);
-      ta.focus();
       ta.select();
       document.execCommand("copy");
       document.body.removeChild(ta);
@@ -221,12 +225,10 @@
 
     let t;
     copyBtn.addEventListener("click", async () => {
-      try {
-        await copyText(CONTRACT);
-        status.classList.add("show");
-        clearTimeout(t);
-        t = setTimeout(() => status.classList.remove("show"), 1200);
-      } catch {}
+      await copyText(CONTRACT);
+      status.classList.add("show");
+      clearTimeout(t);
+      t = setTimeout(() => status.classList.remove("show"), 1200);
     });
   </script>
 </body>
