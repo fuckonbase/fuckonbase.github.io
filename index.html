@@ -6,7 +6,7 @@
   <title>fuckonbase</title>
 
   <style>
-    :root{ --royal: 30, 60, 200; } /* Königsblau */
+    :root{ --royal: 30, 60, 200; }
 
     body{
       margin:0;
@@ -16,7 +16,127 @@
       overflow-x:hidden;
     }
 
-    /* ================= HERO (oben bleibt schwarz) ================= */
+    /* ================= GLOBAL BACKGROUND (jetzt überall, auch im Hero) ================= */
+    .globalBg{
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    /* große, weichere Glows + mehr Intensität */
+    .globalBg::before{
+      content:"";
+      position:absolute;
+      inset:-25%;
+      background:
+        radial-gradient(900px 520px at 20% 80%, rgba(var(--royal),0.24), transparent 60%),
+        radial-gradient(900px 520px at 80% 85%, rgba(var(--royal),0.22), transparent 62%),
+        radial-gradient(1200px 700px at 50% 110%, rgba(var(--royal),0.20), transparent 60%),
+        radial-gradient(900px 520px at 50% 20%, rgba(var(--royal),0.12), transparent 65%);
+      filter: blur(18px);
+      opacity:1;
+    }
+
+    /* Grid/Lines etwas stärker + mask, damit oben nicht zu wild wird */
+    .globalBg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(var(--royal),0.06) 0px,
+          rgba(var(--royal),0.06) 1px,
+          transparent 1px,
+          transparent 95px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          rgba(var(--royal),0.05) 0px,
+          rgba(var(--royal),0.05) 1px,
+          transparent 1px,
+          transparent 95px
+        );
+      opacity:0.28;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,1) 35%, rgba(0,0,0,1) 100%);
+    }
+
+    /* Light beams (räumlich) */
+    .beam{
+      position:absolute;
+      width:520px;
+      height:1200px;
+      top:60%;
+      left:50%;
+      transform: translate(-50%,-50%) rotate(18deg);
+      background: linear-gradient(to bottom,
+        rgba(var(--royal),0.00),
+        rgba(var(--royal),0.10),
+        rgba(var(--royal),0.00)
+      );
+      filter: blur(18px);
+      opacity:0.55;
+      animation: beamMove 10s ease-in-out infinite;
+    }
+
+    .beam.b2{
+      width:420px;
+      height:1100px;
+      transform: translate(-50%,-50%) rotate(-22deg);
+      opacity:0.45;
+      animation-duration: 12s;
+      top:58%;
+    }
+
+    @keyframes beamMove{
+      0%   { transform: translate(-52%,-52%) rotate(18deg); opacity:0.40; }
+      50%  { transform: translate(-48%,-50%) rotate(22deg); opacity:0.65; }
+      100% { transform: translate(-52%,-52%) rotate(18deg); opacity:0.40; }
+    }
+
+    @keyframes beamMove2{
+      0%   { transform: translate(-48%,-52%) rotate(-22deg); opacity:0.35; }
+      50%  { transform: translate(-52%,-50%) rotate(-18deg); opacity:0.58; }
+      100% { transform: translate(-48%,-52%) rotate(-22deg); opacity:0.35; }
+    }
+    .beam.b2{ animation-name: beamMove2; }
+
+    /* Partikel (mehr + nach oben drift) */
+    .particle{
+      position:absolute;
+      width:4px;
+      height:4px;
+      border-radius:999px;
+      background: rgba(var(--royal),0.85);
+      box-shadow:
+        0 0 12px rgba(var(--royal),0.55),
+        0 0 30px rgba(var(--royal),0.22);
+      opacity:0.7;
+      animation: rise var(--dur) linear infinite;
+      transform: translate3d(0,0,0);
+    }
+
+    /* leicht unterschiedliche Größen */
+    .particle.s2{ width:3px; height:3px; opacity:0.65; }
+    .particle.s3{ width:5px; height:5px; opacity:0.75; }
+
+    @keyframes rise{
+      0%{
+        transform: translate3d(0, 40px, 0);
+        opacity:0;
+      }
+      10%{ opacity:0.8; }
+      90%{ opacity:0.8; }
+      100%{
+        transform: translate3d(var(--dx), calc(-100vh - 120px), 0);
+        opacity:0;
+      }
+    }
+
+    /* ================= HERO ================= */
     .hero{
       min-height:100vh;
       display:flex;
@@ -25,26 +145,26 @@
       padding:24px;
       position:relative;
       text-align:center;
-      background:#000;
+      background:#000; /* bleibt schwarz, Background kommt durch die fixed layers */
     }
 
-    /* Unten im Hero nur ein dezenter Teaser */
+    /* unten Teaser stärker */
     .fadeInTeaser{
       position:absolute;
       left:0; right:0; bottom:0;
-      height:180px;
+      height:220px;
       background: linear-gradient(to top,
+        rgba(var(--royal),0.18),
         rgba(var(--royal),0.10),
-        rgba(var(--royal),0.04),
         rgba(0,0,0,0));
-      opacity:0.35;
+      opacity:0.55;
       pointer-events:none;
     }
 
     /* Scroll hint */
     @keyframes scrollHint{
       0%{ transform: translateY(0); opacity:0.55; }
-      50%{ transform: translateY(8px); opacity:0.9; }
+      50%{ transform: translateY(8px); opacity:0.95; }
       100%{ transform: translateY(0); opacity:0.55; }
     }
     .scrollHint{
@@ -57,115 +177,28 @@
       align-items:center;
       gap:8px;
       pointer-events:none;
-      z-index:2;
+      z-index:3;
     }
     .scrollText{
       font-size:12px;
       letter-spacing:1.6px;
-      opacity:0.55;
+      opacity:0.65;
       text-transform:uppercase;
     }
     .scrollDot{
       width:10px;
       height:10px;
       border-radius:999px;
-      background: rgba(var(--royal),0.75);
-      box-shadow: 0 0 10px rgba(var(--royal),0.35);
+      background: rgba(var(--royal),0.9);
+      box-shadow: 0 0 14px rgba(var(--royal),0.55);
       animation: scrollHint 1.8s ease-in-out infinite;
-    }
-
-    /* ================= BACKGROUND NUR UNTEN (Section) ================= */
-    .section{
-      position:relative;
-      min-height:140vh; /* Seite länger */
-      padding:100px 24px 140px;
-      display:flex;
-      justify-content:center;
-      background:#000;
-      overflow:hidden;
-    }
-
-    /* Übergang: oben in der Section fast schwarz */
-    .sectionTopFade{
-      position:absolute;
-      top:0; left:0; right:0;
-      height:220px;
-      background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-      pointer-events:none;
-      z-index:1;
-    }
-
-    /* Background Layer */
-    .bg{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
-    }
-
-    /* große, weiche Glows */
-    .bg::before{
-      content:"";
-      position:absolute;
-      inset:-20%;
-      background:
-        radial-gradient(650px 320px at 20% 30%, rgba(var(--royal),0.16), transparent 60%),
-        radial-gradient(760px 360px at 85% 40%, rgba(var(--royal),0.14), transparent 62%),
-        radial-gradient(980px 520px at 50% 85%, rgba(var(--royal),0.16), transparent 60%);
-      filter: blur(18px);
-      opacity:0.95;
-    }
-
-    /* sehr dezentes Grid/Lines */
-    .bg::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(var(--royal),0.05) 0px,
-          rgba(var(--royal),0.05) 1px,
-          transparent 1px,
-          transparent 110px
-        ),
-        repeating-linear-gradient(
-          0deg,
-          rgba(var(--royal),0.04) 0px,
-          rgba(var(--royal),0.04) 1px,
-          transparent 1px,
-          transparent 110px
-        );
-      opacity:0.18;
-      mask-image: radial-gradient(650px 420px at 50% 35%, rgba(0,0,0,1), rgba(0,0,0,0) 72%);
-      -webkit-mask-image: radial-gradient(650px 420px at 50% 35%, rgba(0,0,0,1), rgba(0,0,0,0) 72%);
-    }
-
-    /* Partikel */
-    .particle{
-      position:absolute;
-      width:4px;
-      height:4px;
-      border-radius:999px;
-      background: rgba(var(--royal),0.70);
-      box-shadow:
-        0 0 10px rgba(var(--royal),0.35),
-        0 0 24px rgba(var(--royal),0.18);
-      opacity:0.6;
-      animation: floaty var(--dur) ease-in-out infinite;
-      transform: translate3d(0,0,0);
-    }
-    @keyframes floaty{
-      0%   { transform: translate3d(0,0,0); opacity:0.45; }
-      50%  { transform: translate3d(var(--dx), var(--dy), 0); opacity:0.85; }
-      100% { transform: translate3d(0,0,0); opacity:0.45; }
     }
 
     /* ================= Logo Glow ================= */
     @keyframes glowPulse{
-      0%{ box-shadow:0 0 14px rgba(var(--royal),0.35),0 0 28px rgba(var(--royal),0.20); }
-      50%{ box-shadow:0 0 26px rgba(var(--royal),0.65),0 0 52px rgba(var(--royal),0.35); }
-      100%{ box-shadow:0 0 14px rgba(var(--royal),0.35),0 0 28px rgba(var(--royal),0.20); }
+      0%{ box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22); }
+      50%{ box-shadow:0 0 34px rgba(var(--royal),0.78),0 0 70px rgba(var(--royal),0.38); }
+      100%{ box-shadow:0 0 16px rgba(var(--royal),0.40),0 0 34px rgba(var(--royal),0.22); }
     }
 
     /* ================= Social Icons ================= */
@@ -179,20 +212,21 @@
       border-radius:12px;
       transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
       text-decoration:none;
+      background: rgba(255,255,255,0.02);
     }
     .social:hover{
       transform: scale(1.15);
-      border-color: rgba(var(--royal),0.9);
-      box-shadow:0 0 12px rgba(var(--royal),0.6),0 0 24px rgba(var(--royal),0.4);
+      border-color: rgba(var(--royal),0.95);
+      box-shadow:0 0 16px rgba(var(--royal),0.75),0 0 34px rgba(var(--royal),0.42);
     }
 
-    /* ================= Contract (Rahmen nur um Contract) ================= */
+    /* ================= Contract ================= */
     .copyWrap{
-      margin-top:48px;
+      margin-top:52px;
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:8px;
+      gap:10px;
     }
     .contractBox{
       border:1px solid rgba(255,255,255,0.22);
@@ -204,10 +238,10 @@
       transition: box-shadow .25s ease, border-color .25s ease;
     }
     .contractBox:hover{
-      border-color: rgba(var(--royal),0.9);
-      box-shadow:0 0 10px rgba(var(--royal),0.45),0 0 22px rgba(var(--royal),0.28);
+      border-color: rgba(var(--royal),0.95);
+      box-shadow:0 0 14px rgba(var(--royal),0.60),0 0 34px rgba(var(--royal),0.30);
     }
-    .contractLabel{ font-size:12px; opacity:.65; margin-bottom:4px; }
+    .contractLabel{ font-size:12px; opacity:.70; margin-bottom:4px; }
     .contractFull{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size:12px;
@@ -221,49 +255,74 @@
       gap:6px;
       transition: opacity .25s ease;
     }
-    .status.show{ opacity:.9; }
+    .status.show{ opacity:.95; }
     .check{
       width:14px;height:14px;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(var(--royal),0.9);
-      box-shadow:0 0 8px rgba(var(--royal),0.45);
+      border:1px solid rgba(var(--royal),0.95);
+      box-shadow:0 0 10px rgba(var(--royal),0.55);
       font-size:11px;
     }
 
-    /* Card unten */
-    .card{
+    /* ================= Scroll Section ================= */
+    .section{
+      min-height:160vh;
+      padding:110px 24px 160px;
+      display:flex;
+      justify-content:center;
+      background:#000;
       position:relative;
-      z-index:2;
+    }
+    .card{
       width:min(820px,100%);
       border:1px solid rgba(255,255,255,0.12);
       border-radius:16px;
-      background: rgba(255,255,255,0.03);
-      box-shadow:0 0 18px rgba(var(--royal),0.10),0 0 50px rgba(var(--royal),0.06);
-      padding:26px;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.04);
+      box-shadow:0 0 26px rgba(var(--royal),0.16),0 0 70px rgba(var(--royal),0.08);
+      padding:28px;
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
     }
     .cardTitle{
       font-size:12px;
-      letter-spacing:1.6px;
+      letter-spacing:1.7px;
       opacity:0.65;
       text-transform:uppercase;
       margin-bottom:12px;
     }
-    .cardBody{
-      font-size:16px;
-      line-height:1.6;
-      opacity:0.9;
-    }
+    .cardBody{ font-size:16px; line-height:1.6; opacity:0.9; }
     .muted{ opacity:0.65; font-size:14px; margin-top:12px; }
   </style>
 </head>
 
 <body>
+  <!-- Intensiver Background überall -->
+  <div class="globalBg">
+    <div class="beam"></div>
+    <div class="beam b2"></div>
+
+    <!-- Viele Partikel (gemischt) -->
+    <!-- unten starten, fliegen nach oben -->
+    <span class="particle s3" style="left:6%;  bottom:-20px; --dx: 12px; --dur: 14s;"></span>
+    <span class="particle s2" style="left:12%; bottom:-60px; --dx:-18px; --dur: 18s;"></span>
+    <span class="particle"    style="left:18%; bottom:-40px; --dx: 10px; --dur: 16s;"></span>
+    <span class="particle s2" style="left:26%; bottom:-80px; --dx: 22px; --dur: 20s;"></span>
+    <span class="particle"    style="left:33%; bottom:-30px; --dx:-14px; --dur: 15s;"></span>
+    <span class="particle s3" style="left:40%; bottom:-70px; --dx: 16px; --dur: 19s;"></span>
+    <span class="particle s2" style="left:48%; bottom:-50px; --dx:-10px; --dur: 17s;"></span>
+    <span class="particle"    style="left:56%; bottom:-90px; --dx: 20px; --dur: 21s;"></span>
+    <span class="particle s2" style="left:63%; bottom:-35px; --dx:-22px; --dur: 16s;"></span>
+    <span class="particle s3" style="left:70%; bottom:-75px; --dx: 14px; --dur: 18s;"></span>
+    <span class="particle"    style="left:78%; bottom:-55px; --dx:-16px; --dur: 20s;"></span>
+    <span class="particle s2" style="left:84%; bottom:-95px; --dx: 18px; --dur: 22s;"></span>
+    <span class="particle s3" style="left:90%; bottom:-45px; --dx:-12px; --dur: 17s;"></span>
+    <span class="particle s2" style="left:95%; bottom:-85px; --dx: 10px; --dur: 19s;"></span>
+  </div>
+
   <!-- HERO -->
   <section class="hero">
     <div style="position:relative; z-index:3;">
-      <img src="bild.jpg?v=23"
+      <img src="bild.jpg?v=24"
            alt="fuckonbase"
            style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 4s ease-in-out infinite;">
 
@@ -274,19 +333,19 @@
       <!-- SOCIAL ICONS (inkl. Gecko) -->
       <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
         <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-          <img src="x.png?v=23" alt="X" style="width:20px;height:20px;">
+          <img src="x.png?v=24" alt="X" style="width:20px;height:20px;">
         </a>
 
         <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="dex.png?v=23" alt="Dexscreener" style="width:20px;height:20px;">
+          <img src="dex.png?v=24" alt="Dexscreener" style="width:20px;height:20px;">
         </a>
 
         <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="gecko.png?v=23" alt="GeckoTerminal" style="width:20px;height:20px;">
+          <img src="gecko.png?v=24" alt="GeckoTerminal" style="width:20px;height:20px;">
         </a>
 
         <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-          <img src="tg.png?v=23" alt="Telegram" style="width:20px;height:20px;">
+          <img src="tg.png?v=24" alt="Telegram" style="width:20px;height:20px;">
         </a>
       </div>
 
@@ -310,25 +369,12 @@
     <div class="fadeInTeaser"></div>
   </section>
 
-  <!-- SCROLL SECTION (hier ist der blaue Background) -->
+  <!-- SCROLL SECTION -->
   <section class="section">
-    <div class="bg">
-      <span class="particle" style="left:12%; top:22%; --dx: 18px; --dy: -22px; --dur: 6.5s;"></span>
-      <span class="particle" style="left:28%; top:55%; --dx: -14px; --dy: 18px; --dur: 7.8s;"></span>
-      <span class="particle" style="left:44%; top:30%; --dx: 22px; --dy: 14px; --dur: 8.2s;"></span>
-      <span class="particle" style="left:63%; top:62%; --dx: -18px; --dy: -16px; --dur: 7.2s;"></span>
-      <span class="particle" style="left:78%; top:38%; --dx: 16px; --dy: 20px; --dur: 6.9s;"></span>
-      <span class="particle" style="left:86%; top:70%; --dx: -20px; --dy: 10px; --dur: 8.6s;"></span>
-      <span class="particle" style="left:18%; top:78%; --dx: 14px; --dy: 12px; --dur: 7.4s;"></span>
-      <span class="particle" style="left:92%; top:18%; --dx: -16px; --dy: 16px; --dur: 9.0s;"></span>
-    </div>
-
-    <div class="sectionTopFade"></div>
-
     <div class="card">
       <div class="cardTitle">Next</div>
       <div class="cardBody">
-        This space is for updates.
+        More info coming.
         <div class="muted">Add roadmap, how to buy, tokenomics, etc.</div>
       </div>
     </div>
@@ -340,7 +386,6 @@
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
     const status = document.getElementById("copyStatus");
-
     contractFull.textContent = CONTRACT;
 
     async function copyText(text){
