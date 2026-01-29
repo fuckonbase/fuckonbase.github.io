@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>fuckonbase — nightshift (safe)</title>
+  <title>fuckonbase</title>
 
   <style>
     :root{ --royal: 30, 60, 200; }
 
     html, body{
-      height:100%;
       margin:0;
-      overflow:hidden; /* NO SCROLL */
       background:#000;
       color:#fff;
       font-family: Arial, sans-serif;
+      overflow-x:hidden;
     }
 
-    /* ========= SAFE BACKGROUND (no heavy blur layers, no backdrop-filter) ========= */
+    /* ===== Continuous Space Background (stable) ===== */
     .bg{
       position:fixed;
       inset:0;
@@ -26,20 +25,20 @@
       overflow:hidden;
     }
 
-    /* Very light base glow (low risk) */
+    /* subtle base glow */
     .bg::before{
       content:"";
       position:absolute;
-      inset:-20%;
+      inset:-25%;
       background:
-        radial-gradient(900px 520px at 20% 88%, rgba(var(--royal),0.08), transparent 62%),
-        radial-gradient(950px 560px at 82% 90%, rgba(var(--royal),0.06), transparent 64%),
-        radial-gradient(1200px 700px at 50% 120%, rgba(var(--royal),0.05), transparent 62%);
+        radial-gradient(1000px 700px at 20% 85%, rgba(var(--royal),0.10), transparent 62%),
+        radial-gradient(1100px 760px at 80% 90%, rgba(var(--royal),0.08), transparent 64%),
+        radial-gradient(1200px 800px at 50% 120%, rgba(var(--royal),0.06), transparent 62%);
       filter: blur(18px);
-      opacity:0.9;
+      opacity:0.95;
     }
 
-    /* Orbs (slow, subtle) */
+    /* glow orbs (very slow, no transform scale on hover anywhere) */
     .orb{
       position:absolute;
       width: var(--s);
@@ -51,40 +50,43 @@
         rgba(var(--royal),0.00) 72%);
       opacity: var(--o);
       animation: orbFloat var(--t) ease-in-out infinite;
-      transform: translate3d(0,0,0);
       will-change: transform, opacity;
     }
     @keyframes orbFloat{
-      0%   { transform: translate3d(0,0,0); opacity: calc(var(--o) * 0.9); }
+      0%   { transform: translate3d(0,0,0); opacity: calc(var(--o) * 0.92); }
       50%  { transform: translate3d(var(--ox), var(--oy), 0); opacity: var(--o); }
-      100% { transform: translate3d(0,0,0); opacity: calc(var(--o) * 0.9); }
+      100% { transform: translate3d(0,0,0); opacity: calc(var(--o) * 0.92); }
     }
 
-    /* Dust (slow, continues beyond viewport) */
+    /* dust (super slow, varied fade-out so no “same line”) */
     .dust{
       position:absolute;
       width:2px; height:2px;
       border-radius:999px;
-      background: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.16);
       box-shadow: 0 0 10px rgba(var(--royal),0.06);
       opacity:0;
       animation: drift var(--dur) linear infinite;
-      transform: translate3d(0,0,0);
       will-change: transform, opacity;
     }
     .dust.d2{ width:1px; height:1px; }
-    .dust.d3{ width:3px; height:3px; background: rgba(255,255,255,0.12); }
+    .dust.d3{ width:3px; height:3px; background: rgba(255,255,255,0.11); }
 
     @keyframes drift{
       0%   { transform: translate3d(0, 60px, 0); opacity:0; }
-      10%  { opacity: var(--op); }
-      80%  { opacity: var(--op); }
-      100% { transform: translate3d(var(--dx), calc(-160vh - var(--fadeExtra)), 0); opacity:0; }
+      12%  { opacity: var(--op); }
+      82%  { opacity: var(--op); }
+      100% { transform: translate3d(var(--dx), calc(-220vh - var(--fadeExtra)), 0); opacity:0; }
     }
 
-    /* ========= HERO ========= */
+    /* If user has reduced motion → turn animations off */
+    @media (prefers-reduced-motion: reduce){
+      .orb, .dust{ animation:none !important; }
+    }
+
+    /* ===== Layout ===== */
     .hero{
-      height:100vh;
+      min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -93,41 +95,48 @@
       position:relative;
     }
 
-    /* Readability overlay (static, no animation) */
+    /* readability vignette */
     .heroVignette{
       position:absolute;
       inset:0;
       background:
-        radial-gradient(1000px 650px at 50% 42%, rgba(0,0,0,0.88), rgba(0,0,0,0.985) 72%),
-        linear-gradient(to bottom, rgba(0,0,0,0.96), rgba(0,0,0,0.72) 65%, rgba(0,0,0,0.52));
+        radial-gradient(1000px 650px at 50% 42%, rgba(0,0,0,0.90), rgba(0,0,0,0.985) 72%),
+        linear-gradient(to bottom, rgba(0,0,0,0.96), rgba(0,0,0,0.70) 65%, rgba(0,0,0,0.48));
       pointer-events:none;
       z-index:1;
     }
 
-    /* Logo glow (VERY gentle, no blur/filter on image itself) */
-    @keyframes glowPulse{
-      0%{ box-shadow:0 0 12px rgba(var(--royal),0.22), 0 0 26px rgba(var(--royal),0.10); }
-      50%{ box-shadow:0 0 22px rgba(var(--royal),0.42), 0 0 46px rgba(var(--royal),0.16); }
-      100%{ box-shadow:0 0 12px rgba(var(--royal),0.22), 0 0 26px rgba(var(--royal),0.10); }
+    /* IMPORTANT: Logo stays stable (no animation) */
+    .logo{
+      width:300px;
+      max-width:85vw;
+      border-radius:14px;
+      margin-bottom:28px;
+      box-shadow: 0 0 18px rgba(var(--royal),0.22), 0 0 44px rgba(var(--royal),0.10);
     }
 
-    /* Social icons (NO backdrop-filter) */
+    /* Social icons (NO scaling, only glow) */
+    .socialRow{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
     .social{
       width:44px;height:44px;
       display:flex;align-items:center;justify-content:center;
       border:1px solid rgba(255,255,255,0.22);
       border-radius:12px;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      text-decoration:none;
       background: rgba(255,255,255,0.02);
+      transition: box-shadow .18s ease, border-color .18s ease;
+      text-decoration:none;
     }
     .social:hover{
-      transform: scale(1.08);
       border-color: rgba(var(--royal),0.55);
       box-shadow: 0 0 14px rgba(var(--royal),0.16), 0 0 30px rgba(var(--royal),0.10);
     }
 
-    /* Contract */
+    /* Contract (NO scaling, only glow) */
     .copyWrap{
       margin-top:52px;
       display:flex;
@@ -142,7 +151,7 @@
       max-width:min(92vw, 760px);
       background: rgba(255,255,255,0.02);
       cursor:pointer;
-      transition: box-shadow .2s ease, border-color .2s ease;
+      transition: box-shadow .18s ease, border-color .18s ease;
     }
     .contractBox:hover{
       border-color: rgba(var(--royal),0.52);
@@ -172,57 +181,58 @@
       box-shadow: 0 0 10px rgba(var(--royal),0.12);
       font-size:11px;
     }
+
+    /* Long scroll space (empty for now) */
+    .space{ min-height:200vh; }
   </style>
 </head>
 
 <body>
   <div class="bg">
-    <!-- ORBS (subtle) -->
-    <span class="orb" style="left:10%; top:18%; --s:150px; --o:0.45; --ox:14px;  --oy:10px;  --t:22s;"></span>
-    <span class="orb" style="left:26%; top:68%; --s:240px; --o:0.32; --ox:-18px; --oy:14px;  --t:30s;"></span>
-    <span class="orb" style="left:54%; top:36%; --s:180px; --o:0.30; --ox:18px;  --oy:-12px; --t:28s;"></span>
-    <span class="orb" style="left:76%; top:22%; --s:200px; --o:0.34; --ox:-14px; --oy:16px;  --t:34s;"></span>
-    <span class="orb" style="left:86%; top:72%; --s:280px; --o:0.26; --ox:16px;  --oy:-14px; --t:36s;"></span>
+    <!-- Orbs -->
+    <span class="orb" style="left:10%; top:18%; --s:150px; --o:0.42; --ox:14px;  --oy:10px;  --t:26s;"></span>
+    <span class="orb" style="left:26%; top:68%; --s:240px; --o:0.30; --ox:-18px; --oy:14px;  --t:34s;"></span>
+    <span class="orb" style="left:54%; top:36%; --s:180px; --o:0.28; --ox:18px;  --oy:-12px; --t:32s;"></span>
+    <span class="orb" style="left:76%; top:22%; --s:200px; --o:0.32; --ox:-14px; --oy:16px;  --t:38s;"></span>
+    <span class="orb" style="left:86%; top:72%; --s:280px; --o:0.24; --ox:16px;  --oy:-14px; --t:40s;"></span>
 
-    <!-- DUST (slow + no “same line” fade) -->
-    <span class="dust d2" style="left:6%;  bottom:-60px;  --dx: 14px;  --dur: 90s; --op:0.40; --fadeExtra:220px;"></span>
-    <span class="dust"    style="left:14%; bottom:-120px; --dx:-16px; --dur: 120s;--op:0.42; --fadeExtra:520px;"></span>
-    <span class="dust d3" style="left:22%; bottom:-80px;  --dx: 10px;  --dur: 110s;--op:0.34; --fadeExtra:380px;"></span>
-    <span class="dust d2" style="left:30%; bottom:-140px; --dx:-12px; --dur: 140s;--op:0.36; --fadeExtra:720px;"></span>
-    <span class="dust"    style="left:38%; bottom:-90px;  --dx: 16px;  --dur: 130s;--op:0.40; --fadeExtra:460px;"></span>
-    <span class="dust d2" style="left:46%; bottom:-160px; --dx:-10px; --dur: 150s;--op:0.34; --fadeExtra:860px;"></span>
-    <span class="dust"    style="left:54%; bottom:-110px; --dx: 12px;  --dur: 125s;--op:0.40; --fadeExtra:520px;"></span>
-    <span class="dust d3" style="left:62%; bottom:-150px; --dx:-18px; --dur: 160s;--op:0.30; --fadeExtra:980px;"></span>
-    <span class="dust"    style="left:70%; bottom:-95px;  --dx: 14px;  --dur: 135s;--op:0.38; --fadeExtra:560px;"></span>
-    <span class="dust d2" style="left:78%; bottom:-170px; --dx:-14px; --dur: 170s;--op:0.32; --fadeExtra:1080px;"></span>
-    <span class="dust"    style="left:86%; bottom:-120px; --dx: 10px;  --dur: 145s;--op:0.38; --fadeExtra:660px;"></span>
-    <span class="dust d2" style="left:94%; bottom:-180px; --dx:-10px; --dur: 175s;--op:0.30; --fadeExtra:1160px;"></span>
+    <!-- Dust (super slow) -->
+    <span class="dust d2" style="left:6%;  bottom:-60px;  --dx: 14px;  --dur: 120s; --op:0.36; --fadeExtra:220px;"></span>
+    <span class="dust"    style="left:14%; bottom:-120px; --dx:-16px; --dur: 160s; --op:0.38; --fadeExtra:520px;"></span>
+    <span class="dust d3" style="left:22%; bottom:-80px;  --dx: 10px;  --dur: 150s; --op:0.30; --fadeExtra:380px;"></span>
+    <span class="dust d2" style="left:30%; bottom:-140px; --dx:-12px; --dur: 180s; --op:0.32; --fadeExtra:720px;"></span>
+    <span class="dust"    style="left:38%; bottom:-90px;  --dx: 16px;  --dur: 170s; --op:0.36; --fadeExtra:460px;"></span>
+    <span class="dust d2" style="left:46%; bottom:-160px; --dx:-10px; --dur: 190s; --op:0.30; --fadeExtra:860px;"></span>
+    <span class="dust"    style="left:54%; bottom:-110px; --dx: 12px;  --dur: 165s; --op:0.36; --fadeExtra:520px;"></span>
+    <span class="dust d3" style="left:62%; bottom:-150px; --dx:-18px; --dur: 210s; --op:0.26; --fadeExtra:980px;"></span>
+    <span class="dust"    style="left:70%; bottom:-95px;  --dx: 14px;  --dur: 175s; --op:0.34; --fadeExtra:560px;"></span>
+    <span class="dust d2" style="left:78%; bottom:-170px; --dx:-14px; --dur: 220s; --op:0.28; --fadeExtra:1080px;"></span>
+    <span class="dust"    style="left:86%; bottom:-120px; --dx: 10px;  --dur: 185s; --op:0.34; --fadeExtra:660px;"></span>
+    <span class="dust d2" style="left:94%; bottom:-180px; --dx:-10px; --dur: 230s; --op:0.26; --fadeExtra:1160px;"></span>
   </div>
 
   <section class="hero">
     <div class="heroVignette"></div>
 
     <div style="position:relative; z-index:3;">
-      <img src="bild.jpg?v=nightshift_safe1"
-           alt="fuckonbase"
-           style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 5s ease-in-out infinite;">
+      <img class="logo" src="bild.jpg?v=29" alt="fuckonbase">
 
       <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
         coming soon
       </div>
 
-      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <div class="socialRow">
         <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-          <img src="x.png?v=nightshift_safe1" alt="X" style="width:20px;height:20px;">
+          <img src="x.png?v=29" alt="X" style="width:20px;height:20px;">
         </a>
         <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="dex.png?v=nightshift_safe1" alt="Dexscreener" style="width:20px;height:20px;">
+          <img src="dex.png?v=29" alt="Dexscreener" style="width:20px;height:20px;">
         </a>
         <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="gecko.png?v=nightshift_safe1" alt="GeckoTerminal" style="width:20px;height:20px;">
+          <img src="gecko.png?v=29" alt="GeckoTerminal" style="width:20px;height:20px;">
         </a>
         <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-          <img src="tg.png?v=nightshift_safe1" alt="Telegram" style="width:20px;height:20px;">
+          <img src="tg.png?v=29" alt="Telegram" style="width:20px;height:20px;">
         </a>
       </div>
 
@@ -238,11 +248,15 @@
     </div>
   </section>
 
+  <!-- empty scroll area for now -->
+  <div class="space"></div>
+
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
     const status = document.getElementById("copyStatus");
+
     contractFull.textContent = CONTRACT;
 
     async function copyText(text){
