@@ -6,7 +6,11 @@
   <title>fuckonbase</title>
 
   <style>
-    :root{ --royal: 30, 60, 200; }
+    :root{
+      --royal: 30, 60, 200;
+      --panelGlow: rgba(var(--royal), 0.28);
+      --panelGlow2: rgba(var(--royal), 0.16);
+    }
 
     body{
       margin:0;
@@ -16,11 +20,11 @@
       overflow-x:hidden;
     }
 
-    /* ===== Space background (subtle, professional) ===== */
+    /* ===== Subtle space bg ===== */
     .bg{
       position:fixed;
       inset:0;
-      z-index:-1;
+      z-index:-2;
       pointer-events:none;
       overflow:hidden;
     }
@@ -106,7 +110,7 @@
       max-width:min(92vw, 700px);
       background: rgba(255,255,255,0.02);
       cursor:pointer;
-      transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease;
+      transition: box-shadow .2s ease, border-color .2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
@@ -138,138 +142,221 @@
       font-size:11px;
     }
 
-    /* ===== Lore (smaller + hover grow) ===== */
+    /* ===== Lore: alternating small blocks ===== */
     .lore{
       padding: 56px 14px 110px;
-      max-width: 1080px;
+      max-width: 1100px;
       margin: 0 auto;
+      position:relative;
+      z-index:0;
     }
+
     .loreTitle{
       font-size: clamp(18px, 2.3vw, 28px);
       line-height: 1.15;
       letter-spacing: 0.2px;
-      margin: 0 0 18px 0;
+      margin: 0 0 20px 0;
       opacity: 0.95;
       text-align:center;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
+    /* Stack column; each row aligns left/right */
+    .stack{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      align-items:stretch;
     }
 
-    /* Straight tiles */
-    .tile{
-      border:1px solid rgba(255,255,255,0.13);
-      border-radius:14px;
+    .row{
+      display:flex;
+      width:100%;
+    }
+    .row.left{ justify-content:flex-start; }
+    .row.right{ justify-content:flex-end; }
+
+    /* Small, same-size blocks */
+    .card{
+      width: min(520px, 92vw);
+      height: 170px;                 /* SAME HEIGHT */
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.14);
       background: rgba(255,255,255,0.02);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       overflow:hidden;
-      box-shadow: 0 0 16px rgba(var(--royal),0.06), 0 0 44px rgba(var(--royal),0.03);
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    }
 
-    .tileInner{
+      box-shadow:
+        0 0 0 1px rgba(var(--royal),0.10) inset,
+        0 0 20px var(--panelGlow),
+        0 0 70px var(--panelGlow2);
+
       display:flex;
-      gap:10px;
-      padding:10px;
-      align-items:flex-start;
+      gap:12px;
+      padding:12px;
+
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      will-change: transform;
+      cursor: default;
+      position:relative;
     }
 
-    .tile.stack .tileInner{ flex-direction:column; gap:8px; }
-    .tile.tall .tileInner{ flex-direction:column; gap:8px; }
-
-    /* smaller images */
-    .imgWrap{
-      flex:0 0 auto;
-      width: 120px;
-      transition: transform .22s ease, filter .22s ease;
-      transform-origin: center;
+    /* Small image */
+    .card .thumb{
+      width: 160px;                  /* smaller */
+      height: 100%;
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 0 14px rgba(var(--royal),0.08);
+      flex: 0 0 auto;
+      background: rgba(255,255,255,0.01);
     }
-    .tile.stack .imgWrap,
-    .tile.tall .imgWrap{ width:100%; }
-
-    .imgWrap img{
+    .card .thumb img{
       width:100%;
-      height:auto;
+      height:100%;
+      object-fit: cover;
       display:block;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 0 12px rgba(var(--royal),0.05);
-      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
-      transform-origin: center;
+      transform: scale(1.0);
+      transition: transform .18s ease;
     }
 
-    .textWrap{ flex:1; min-width:0; }
+    .card .meta{
+      flex: 1 1 auto;
+      min-width:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:6px;
+    }
 
-    .num{
+    .kicker{
       font-size:10px;
       letter-spacing:1.8px;
       text-transform:uppercase;
-      opacity:0.52;
-      margin-bottom:5px;
+      opacity:0.55;
     }
-    .heading{
+
+    .title{
       font-size:13px;
-      margin:0 0 6px 0;
-      opacity:0.92;
-    }
-    .desc{
       margin:0;
+      opacity:0.95;
+      line-height:1.15;
+    }
+
+    .desc{
       font-size:12px;
-      line-height:1.52;
-      opacity:0.74;
+      line-height:1.45;
+      opacity:0.78;
+      margin:0;
+      display:-webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow:hidden;
     }
 
-    /* more "längliche" blocks */
-    .span-12{ grid-column: span 12; }
-    .span-8 { grid-column: span 8;  }
-    .span-7 { grid-column: span 7;  }
-    .span-6 { grid-column: span 6;  }
-    .span-5 { grid-column: span 5;  }
-    .span-4 { grid-column: span 4;  }
-
-    /* HOVER / TOUCH EFFECT */
-    .tile:hover,
-    .tile:active{
-      transform: translateY(-3px);
-      border-color: rgba(var(--royal),0.46);
-      box-shadow: 0 0 18px rgba(var(--royal),0.12), 0 0 54px rgba(var(--royal),0.06);
+    /* Hover = slight lift (small mode) */
+    @media (hover:hover){
+      .card:hover{
+        transform: translateY(-2px);
+        border-color: rgba(var(--royal),0.46);
+        box-shadow:
+          0 0 0 1px rgba(var(--royal),0.14) inset,
+          0 0 26px rgba(var(--royal),0.30),
+          0 0 90px rgba(var(--royal),0.16);
+      }
+      .card:hover .thumb img{ transform: scale(1.03); }
     }
 
-    .tile:hover .imgWrap img,
-    .tile:active .imgWrap img{
-      transform: scale(1.10);
-      box-shadow: 0 0 18px rgba(var(--royal),0.16), 0 0 48px rgba(var(--royal),0.08);
-      filter: saturate(1.06);
+    /* ===== Focus zoom (center overlay) ===== */
+    .backdrop{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 50;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease;
+    }
+    .backdrop.show{
+      opacity:1;
+      pointer-events:auto;
     }
 
-    /* Mobile: no “sticky hover” issues */
-    @media (hover: none){
-      .tile:hover{ transform:none; border-color: rgba(255,255,255,0.13); box-shadow: 0 0 16px rgba(var(--royal),0.06), 0 0 44px rgba(var(--royal),0.03); }
-      .tile:hover .imgWrap img{ transform:none; box-shadow: 0 0 12px rgba(var(--royal),0.05); filter:none; }
+    .card.focus{
+      position:fixed;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%) scale(1.0);
+      z-index: 60;
+
+      width: min(980px, 92vw);
+      height: min(520px, 78vh);
+
+      padding:18px;
+      gap:16px;
+
+      border-color: rgba(var(--royal),0.56);
+      box-shadow:
+        0 0 0 1px rgba(var(--royal),0.16) inset,
+        0 0 40px rgba(var(--royal),0.34),
+        0 0 140px rgba(var(--royal),0.22);
     }
 
-    @media (max-width: 900px){
-      .grid{ grid-template-columns: 1fr; }
-      .span-12,.span-8,.span-7,.span-6,.span-5,.span-4{ grid-column: span 1; }
-      .tileInner{ flex-direction:column; }
-      .imgWrap{ width:100%; }
+    /* In focus: bigger image + readable text */
+    .card.focus .thumb{
+      width: 52%;
+      height: 100%;
+      border-radius: 18px;
+    }
+    .card.focus .thumb img{
+      transform: scale(1.05);
+    }
+    .card.focus .kicker{ font-size:11px; opacity:0.65; }
+    .card.focus .title{ font-size:18px; }
+    .card.focus .desc{
+      font-size:14px;
+      -webkit-line-clamp: unset;
+      overflow: visible;
+      line-height:1.6;
+      opacity:0.85;
+    }
+
+    /* If screen is narrow: stack in focus */
+    @media (max-width: 760px){
+      .card{
+        height:auto;
+      }
+      .card .thumb{
+        width: 145px;
+        height: 150px;
+      }
+      .card.focus{
+        height: auto;
+        max-height: 86vh;
+        overflow:auto;
+        flex-direction:column;
+      }
+      .card.focus .thumb{
+        width: 100%;
+        height: 240px;
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="bg"></div>
+  <div class="backdrop" id="backdrop"></div>
 
   <!-- HERO -->
   <section class="hero">
     <div class="heroVignette"></div>
 
     <div style="position:relative; z-index:3;">
-      <img src="bild.jpg?v=34"
+      <img src="bild.jpg?v=35"
            alt="fuckonbase"
            style="width:260px;max-width:80vw;border-radius:14px;margin-bottom:18px;animation:glowPulse 4s ease-in-out infinite;">
 
@@ -279,16 +366,16 @@
 
       <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-          <img src="x.png?v=34" alt="X" style="width:18px;height:18px;">
+          <img src="x.png?v=35" alt="X" style="width:18px;height:18px;">
         </a>
         <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="dex.png?v=34" alt="Dexscreener" style="width:18px;height:18px;">
+          <img src="dex.png?v=35" alt="Dexscreener" style="width:18px;height:18px;">
         </a>
         <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="gecko.png?v=34" alt="GeckoTerminal" style="width:18px;height:18px;">
+          <img src="gecko.png?v=35" alt="GeckoTerminal" style="width:18px;height:18px;">
         </a>
         <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-          <img src="tg.png?v=34" alt="Telegram" style="width:18px;height:18px;">
+          <img src="tg.png?v=35" alt="Telegram" style="width:18px;height:18px;">
         </a>
       </div>
 
@@ -310,164 +397,181 @@
   <section class="lore">
     <h2 class="loreTitle">Fuck is the most versatile word in the language.</h2>
 
-    <div class="grid">
-      <article class="tile span-12">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000000.png?v=34" alt="Lore 01"></div>
-          <div class="textWrap">
-            <div class="num">01</div>
-            <div class="heading">Discourse filler</div>
+    <div class="stack" id="loreStack">
+
+      <!-- 01 -->
+      <div class="row left">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000000.png?v=35" alt="Lore 01"></div>
+          <div class="meta">
+            <div class="kicker">01</div>
+            <h3 class="title">Discourse filler</h3>
             <p class="desc">Used to structure speech rhythmically rather than semantically. The word carries little literal meaning and mainly expresses intensity, agitation, or emphasis in spoken language.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-7">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000001.png?v=34" alt="Lore 02"></div>
-          <div class="textWrap">
-            <div class="num">02</div>
-            <div class="heading">Adverb / intensifier</div>
+      <!-- 02 -->
+      <div class="row right">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000001.png?v=35" alt="Lore 02"></div>
+          <div class="meta">
+            <div class="kicker">02</div>
+            <h3 class="title">Adverb / intensifier</h3>
             <p class="desc">Functions as a strong amplifier of emotion or degree. It adds force comparable to “very,” but with much higher emotional impact and informality.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-5 tall">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000002.png?v=34" alt="Lore 03"></div>
-          <div class="textWrap">
-            <div class="num">03</div>
-            <div class="heading">Adjective</div>
+      <!-- 03 -->
+      <div class="row left">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000002.png?v=35" alt="Lore 03"></div>
+          <div class="meta">
+            <div class="kicker">03</div>
+            <h3 class="title">Adjective</h3>
             <p class="desc">Modifies a noun to inject emotional weight rather than factual information. This use signals frustration, contempt, or emphasis and contributes mood instead of content.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-6">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000003.png?v=34" alt="Lore 04"></div>
-          <div class="textWrap">
-            <div class="num">04</div>
-            <div class="heading">Noun (abstract)</div>
+      <!-- 04 -->
+      <div class="row right">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000003.png?v=35" alt="Lore 04"></div>
+          <div class="meta">
+            <div class="kicker">04</div>
+            <h3 class="title">Noun (abstract)</h3>
             <p class="desc">Refers to a situation, outcome, or level of concern rather than a concrete object. Meaning is highly context-dependent and often tied to disbelief or indifference.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-6">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000004.png?v=34" alt="Lore 05"></div>
-          <div class="textWrap">
-            <div class="num">05</div>
-            <div class="heading">Question intensifier</div>
+      <!-- 05 -->
+      <div class="row left">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000004.png?v=35" alt="Lore 05"></div>
+          <div class="meta">
+            <div class="kicker">05</div>
+            <h3 class="title">Question intensifier</h3>
             <p class="desc">Adds emotional force to a question without changing its factual meaning. It raises urgency, disbelief, or hostility and signals strong emotional involvement.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-4 tall">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000005.png?v=34" alt="Lore 06"></div>
-          <div class="textWrap">
-            <div class="num">06</div>
-            <div class="heading">Phrasal verb base</div>
+      <!-- 06 -->
+      <div class="row right">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000005.png?v=35" alt="Lore 06"></div>
+          <div class="meta">
+            <div class="kicker">06</div>
+            <h3 class="title">Phrasal verb base</h3>
             <p class="desc">Combines with particles to form new verbs with distinct meanings. These constructions are highly productive and often far removed from the original sexual sense.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-8">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000006.png?v=34" alt="Lore 07"></div>
-          <div class="textWrap">
-            <div class="num">07</div>
-            <div class="heading">General verb</div>
+      <!-- 07 -->
+      <div class="row left">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000006.png?v=35" alt="Lore 07"></div>
+          <div class="meta">
+            <div class="kicker">07</div>
+            <h3 class="title">General verb</h3>
             <p class="desc">Used metaphorically to express damage, failure, harm, or negative impact. The meaning is non-sexual and replaces more specific verbs for emotional emphasis.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-7">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000007.png?v=34" alt="Lore 08"></div>
-          <div class="textWrap">
-            <div class="num">08</div>
-            <div class="heading">Past participle / adjectival state</div>
+      <!-- 08 -->
+      <div class="row right">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000007.png?v=35" alt="Lore 08"></div>
+          <div class="meta">
+            <div class="kicker">08</div>
+            <h3 class="title">Past participle / adjectival state</h3>
             <p class="desc">Describes a condition of being ruined, doomed, or exhausted. Often dramatic or exaggerated, frequently implying that recovery is unlikely.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-5 tall">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000008.png?v=34" alt="Lore 09"></div>
-          <div class="textWrap">
-            <div class="num">09</div>
-            <div class="heading">Reflexive verb</div>
+      <!-- 09 -->
+      <div class="row left">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000008.png?v=35" alt="Lore 09"></div>
+          <div class="meta">
+            <div class="kicker">09</div>
+            <h3 class="title">Reflexive verb</h3>
             <p class="desc">Indicates self-inflicted harm or sabotage. This use emphasizes personal responsibility, regret, or irony, often with a self-critical tone.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-12">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000009.png?v=34" alt="Lore 10"></div>
-          <div class="textWrap">
-            <div class="num">10</div>
-            <div class="heading">Idiomatic / fixed expressions</div>
+      <!-- 10 -->
+      <div class="row right">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000009.png?v=35" alt="Lore 10"></div>
+          <div class="meta">
+            <div class="kicker">10</div>
+            <h3 class="title">Idiomatic / fixed expressions</h3>
             <p class="desc">Appears in conventionalized phrases whose meanings are not literal. These expressions function as single semantic units and signal fluency and familiarity.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-6">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000010.png?v=34" alt="Lore 11"></div>
-          <div class="textWrap">
-            <div class="num">11</div>
-            <div class="heading">Interjection</div>
+      <!-- 11 -->
+      <div class="row left">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000010.png?v=35" alt="Lore 11"></div>
+          <div class="meta">
+            <div class="kicker">11</div>
+            <h3 class="title">Interjection</h3>
             <p class="desc">Used as a standalone emotional reaction. Meaning is derived entirely from context and intonation and reflects immediate emotional response.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-6">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000011.png?v=34" alt="Lore 12"></div>
-          <div class="textWrap">
-            <div class="num">12</div>
-            <div class="heading">Insult noun (person)</div>
+      <!-- 12 -->
+      <div class="row right">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000011.png?v=35" alt="Lore 12"></div>
+          <div class="meta">
+            <div class="kicker">12</div>
+            <h3 class="title">Insult noun (person)</h3>
             <p class="desc">Functions as a negative label for a person. The word carries strong emotional judgment with little descriptive content.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-5 tall">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000012.png?v=34" alt="Lore 13"></div>
-          <div class="textWrap">
-            <div class="num">13</div>
-            <div class="heading">Literal verb</div>
+      <!-- 13 -->
+      <div class="row left">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000012.png?v=35" alt="Lore 13"></div>
+          <div class="meta">
+            <div class="kicker">13</div>
+            <h3 class="title">Literal verb</h3>
             <p class="desc">Refers directly to the sexual act. This is the original, concrete meaning of the word and is typically explicit and unambiguous.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
 
-      <article class="tile span-7">
-        <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000013.png?v=34" alt="Lore 14"></div>
-          <div class="textWrap">
-            <div class="num">14</div>
-            <div class="heading">Aggressive / hostile verb</div>
+      <!-- 14 -->
+      <div class="row right">
+        <article class="card" data-focus="true">
+          <div class="thumb"><img src="fuck lore_000013.png?v=35" alt="Lore 14"></div>
+          <div class="meta">
+            <div class="kicker">14</div>
+            <h3 class="title">Aggressive / hostile verb</h3>
             <p class="desc">Used to attack, dismiss, or provoke another person. The primary function is social confrontation rather than literal meaning.</p>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
+
     </div>
   </section>
 
   <script>
+    // ===== Contract copy =====
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
@@ -488,6 +592,56 @@
       status.classList.add("show");
       clearTimeout(t);
       t=setTimeout(()=>status.classList.remove("show"),1200);
+    });
+
+    // ===== Hover-to-zoom focus cards =====
+    const backdrop = document.getElementById("backdrop");
+    let activeCard = null;
+    let leaveTimer = null;
+
+    function openFocus(card){
+      if (activeCard === card) return;
+      closeFocus();
+      activeCard = card;
+      card.classList.add("focus");
+      backdrop.classList.add("show");
+    }
+
+    function closeFocus(){
+      if (!activeCard) return;
+      activeCard.classList.remove("focus");
+      activeCard = null;
+      backdrop.classList.remove("show");
+    }
+
+    // Desktop hover behavior
+    const cards = document.querySelectorAll(".card[data-focus='true']");
+    cards.forEach(card=>{
+      card.addEventListener("mouseenter", ()=>{
+        // small delay feels less jumpy
+        clearTimeout(leaveTimer);
+        openFocus(card);
+      });
+
+      card.addEventListener("mouseleave", ()=>{
+        // close shortly after leaving (prevents flicker)
+        clearTimeout(leaveTimer);
+        leaveTimer = setTimeout(closeFocus, 80);
+      });
+
+      // Mobile/touch fallback: tap to open
+      card.addEventListener("touchstart", (e)=>{
+        // prevent immediate click-through scroll weirdness
+        // open focus on tap
+        openFocus(card);
+      }, {passive:true});
+    });
+
+    backdrop.addEventListener("mouseenter", closeFocus);
+    backdrop.addEventListener("click", closeFocus);
+
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "Escape") closeFocus();
     });
   </script>
 </body>
