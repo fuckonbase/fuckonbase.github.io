@@ -16,7 +16,7 @@
       overflow-x:hidden;
     }
 
-    /* ===== Continuous Space Background (fixed) ===== */
+    /* ===== Space Background (fixed) ===== */
     .bg{
       position:fixed;
       inset:0;
@@ -24,7 +24,6 @@
       pointer-events:none;
       overflow:hidden;
     }
-
     .bg::before{
       content:"";
       position:absolute;
@@ -70,7 +69,6 @@
     .dust.d2{ width:1px; height:1px; }
     .dust.d3{ width:3px; height:3px; background: rgba(255,255,255,0.11); }
 
-    /* long travel so you still see dust during scroll */
     @keyframes drift{
       0%   { transform: translate3d(0, 60px, 0); opacity:0; }
       12%  { opacity: var(--op); }
@@ -78,26 +76,19 @@
       100% { transform: translate3d(var(--dx), calc(-260vh - var(--fadeExtra)), 0); opacity:0; }
     }
 
-    @media (prefers-reduced-motion: reduce){
-      .orb, .dust{ animation:none !important; }
-    }
-
-    /* ===== Page wrappers ===== */
+    /* ===== Page Overlay so background feels present everywhere ===== */
     .page{
       position:relative;
-      z-index:0;
-      min-height:300vh; /* long page */
+      min-height:300vh;
     }
-
-    /* This overlay makes the background visible everywhere (not just hero) */
     .spaceWash{
       position:absolute;
       inset:0;
       z-index:-1;
       pointer-events:none;
       background:
-        radial-gradient(1000px 700px at 50% 120px, rgba(0,0,0,0.86), rgba(0,0,0,0.96) 55%, rgba(0,0,0,0.88)),
-        radial-gradient(1200px 900px at 50% 70%, rgba(var(--royal),0.05), transparent 70%);
+        radial-gradient(1400px 900px at 50% 55%, rgba(var(--royal),0.04), transparent 70%),
+        linear-gradient(to bottom, rgba(0,0,0,0.20), rgba(0,0,0,0.55));
       opacity:0.95;
     }
 
@@ -111,7 +102,6 @@
       text-align:center;
       position:relative;
     }
-
     .heroVignette{
       position:absolute;
       inset:0;
@@ -177,7 +167,6 @@
       word-break: break-all;
       opacity:0.95;
     }
-
     .status{
       font-size:12px;
       opacity:0;
@@ -195,10 +184,44 @@
       font-size:11px;
     }
 
-    /* below hero: just empty space for now but with a subtle gradient so it's not “black” */
-    .below{
-      height:200vh;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(var(--royal),0.03), rgba(0,0,0,0.0));
+    /* ===== Content Grid (14 placeholders) ===== */
+    .content{
+      padding:80px 18px 120px;
+      max-width:1100px;
+      margin:0 auto;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap:14px;
+    }
+    @media (min-width: 900px){
+      .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    }
+    .tile{
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:16px;
+      background: rgba(0,0,0,0.22);
+      padding:14px;
+      box-shadow: 0 0 22px rgba(var(--royal),0.10);
+    }
+    .tile img{
+      width:100%;
+      border-radius:12px;
+      display:block;
+      opacity:0.92;
+    }
+    .tile .t{
+      margin-top:10px;
+      font-size:13px;
+      opacity:0.85;
+      letter-spacing:0.3px;
+    }
+    .tile .s{
+      margin-top:6px;
+      font-size:12px;
+      opacity:0.60;
+      line-height:1.45;
     }
   </style>
 </head>
@@ -212,7 +235,7 @@
     <span class="orb" style="left:76%; top:22%; --s:200px; --o:0.32; --ox:-14px; --oy:16px;  --t:38s;"></span>
     <span class="orb" style="left:86%; top:72%; --s:280px; --o:0.24; --ox:16px;  --oy:-14px; --t:40s;"></span>
 
-    <!-- Dust (super slow) -->
+    <!-- Dust -->
     <span class="dust d2" style="left:6%;  bottom:-60px;  --dx: 14px;  --dur: 120s; --op:0.36; --fadeExtra:220px;"></span>
     <span class="dust"    style="left:14%; bottom:-120px; --dx:-16px; --dur: 160s; --op:0.38; --fadeExtra:520px;"></span>
     <span class="dust d3" style="left:22%; bottom:-80px;  --dx: 10px;  --dur: 150s; --op:0.30; --fadeExtra:380px;"></span>
@@ -234,7 +257,7 @@
       <div class="heroVignette"></div>
 
       <div style="position:relative; z-index:3;">
-        <img class="logo" src="bild.jpg?v=30" alt="fuckonbase">
+        <img class="logo" src="bild.jpg?v=31" alt="fuckonbase">
 
         <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
           coming soon
@@ -242,16 +265,16 @@
 
         <div class="socialRow">
           <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-            <img src="x.png?v=30" alt="X" style="width:20px;height:20px;">
+            <img src="x.png?v=31" alt="X" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="dex.png?v=30" alt="Dexscreener" style="width:20px;height:20px;">
+            <img src="dex.png?v=31" alt="Dexscreener" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="gecko.png?v=30" alt="GeckoTerminal" style="width:20px;height:20px;">
+            <img src="gecko.png?v=31" alt="GeckoTerminal" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-            <img src="tg.png?v=30" alt="Telegram" style="width:20px;height:20px;">
+            <img src="tg.png?v=31" alt="Telegram" style="width:20px;height:20px;">
           </a>
         </div>
 
@@ -267,15 +290,31 @@
       </div>
     </section>
 
-    <div class="below"></div>
+    <!-- 14 placeholder tiles so you SEE content below -->
+    <section class="content">
+      <div class="grid">
+        <!-- Use your real images/text later; for now it proves scroll section works -->
+        ${Array.from({length:14}).map((_,i)=>`
+        <div class="tile">
+          <img src="bild.jpg?v=31" alt="tile">
+          <div class="t">Section ${i+1}</div>
+          <div class="s">Placeholder content. Replace with your real text/images later.</div>
+        </div>
+        `).join("")}
+      </div>
+    </section>
   </div>
 
   <script>
+    // Replace the template string above (GitHub doesn't run JS templates inside HTML)
+  </script>
+
+  <script>
+    // Contract copy
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
     const status = document.getElementById("copyStatus");
-
     contractFull.textContent = CONTRACT;
 
     async function copyText(text){
