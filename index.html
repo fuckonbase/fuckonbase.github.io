@@ -76,11 +76,11 @@
       100% { transform: translate3d(var(--dx), calc(-260vh - var(--fadeExtra)), 0); opacity:0; }
     }
 
-    /* ===== Page Overlay so background feels present everywhere ===== */
     .page{
       position:relative;
-      min-height:300vh;
+      min-height:320vh;
     }
+
     .spaceWash{
       position:absolute;
       inset:0;
@@ -167,6 +167,7 @@
       word-break: break-all;
       opacity:0.95;
     }
+
     .status{
       font-size:12px;
       opacity:0;
@@ -184,7 +185,7 @@
       font-size:11px;
     }
 
-    /* ===== Content Grid (14 placeholders) ===== */
+    /* ===== Content Grid (14 tiles) ===== */
     .content{
       padding:80px 18px 120px;
       max-width:1100px;
@@ -257,7 +258,7 @@
       <div class="heroVignette"></div>
 
       <div style="position:relative; z-index:3;">
-        <img class="logo" src="bild.jpg?v=31" alt="fuckonbase">
+        <img class="logo" src="bild.jpg?v=32" alt="fuckonbase">
 
         <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
           coming soon
@@ -265,16 +266,16 @@
 
         <div class="socialRow">
           <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-            <img src="x.png?v=31" alt="X" style="width:20px;height:20px;">
+            <img src="x.png?v=32" alt="X" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="dex.png?v=31" alt="Dexscreener" style="width:20px;height:20px;">
+            <img src="dex.png?v=32" alt="Dexscreener" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="gecko.png?v=31" alt="GeckoTerminal" style="width:20px;height:20px;">
+            <img src="gecko.png?v=32" alt="GeckoTerminal" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-            <img src="tg.png?v=31" alt="Telegram" style="width:20px;height:20px;">
+            <img src="tg.png?v=32" alt="Telegram" style="width:20px;height:20px;">
           </a>
         </div>
 
@@ -290,27 +291,28 @@
       </div>
     </section>
 
-    <!-- 14 placeholder tiles so you SEE content below -->
     <section class="content">
       <div class="grid">
-        <!-- Use your real images/text later; for now it proves scroll section works -->
-        ${Array.from({length:14}).map((_,i)=>`
-        <div class="tile">
-          <img src="bild.jpg?v=31" alt="tile">
-          <div class="t">Section ${i+1}</div>
-          <div class="s">Placeholder content. Replace with your real text/images later.</div>
-        </div>
-        `).join("")}
+        <!-- 14 tiles (placeholder) -->
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 1</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 2</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 3</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 4</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 5</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 6</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 7</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 8</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 9</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 10</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 11</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 12</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 13</div><div class="s">Placeholder content.</div></div>
+        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 14</div><div class="s">Placeholder content.</div></div>
       </div>
     </section>
   </div>
 
   <script>
-    // Replace the template string above (GitHub doesn't run JS templates inside HTML)
-  </script>
-
-  <script>
-    // Contract copy
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
