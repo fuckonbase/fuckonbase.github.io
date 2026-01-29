@@ -16,29 +16,28 @@
       overflow-x:hidden;
     }
 
-    /* ===== Continuous Space Background (stable) ===== */
+    /* ===== Continuous Space Background (fixed) ===== */
     .bg{
       position:fixed;
       inset:0;
-      z-index:-1;
+      z-index:-2;
       pointer-events:none;
       overflow:hidden;
     }
 
-    /* subtle base glow */
     .bg::before{
       content:"";
       position:absolute;
       inset:-25%;
       background:
-        radial-gradient(1000px 700px at 20% 85%, rgba(var(--royal),0.10), transparent 62%),
-        radial-gradient(1100px 760px at 80% 90%, rgba(var(--royal),0.08), transparent 64%),
-        radial-gradient(1200px 800px at 50% 120%, rgba(var(--royal),0.06), transparent 62%);
+        radial-gradient(1100px 800px at 18% 80%, rgba(var(--royal),0.11), transparent 62%),
+        radial-gradient(1200px 860px at 82% 86%, rgba(var(--royal),0.09), transparent 64%),
+        radial-gradient(1400px 900px at 50% 115%, rgba(var(--royal),0.07), transparent 62%),
+        radial-gradient(900px 600px at 50% 15%, rgba(var(--royal),0.05), transparent 70%);
       filter: blur(18px);
       opacity:0.95;
     }
 
-    /* glow orbs (very slow, no transform scale on hover anywhere) */
     .orb{
       position:absolute;
       width: var(--s);
@@ -58,7 +57,6 @@
       100% { transform: translate3d(0,0,0); opacity: calc(var(--o) * 0.92); }
     }
 
-    /* dust (super slow, varied fade-out so no “same line”) */
     .dust{
       position:absolute;
       width:2px; height:2px;
@@ -72,19 +70,38 @@
     .dust.d2{ width:1px; height:1px; }
     .dust.d3{ width:3px; height:3px; background: rgba(255,255,255,0.11); }
 
+    /* long travel so you still see dust during scroll */
     @keyframes drift{
       0%   { transform: translate3d(0, 60px, 0); opacity:0; }
       12%  { opacity: var(--op); }
       82%  { opacity: var(--op); }
-      100% { transform: translate3d(var(--dx), calc(-220vh - var(--fadeExtra)), 0); opacity:0; }
+      100% { transform: translate3d(var(--dx), calc(-260vh - var(--fadeExtra)), 0); opacity:0; }
     }
 
-    /* If user has reduced motion → turn animations off */
     @media (prefers-reduced-motion: reduce){
       .orb, .dust{ animation:none !important; }
     }
 
-    /* ===== Layout ===== */
+    /* ===== Page wrappers ===== */
+    .page{
+      position:relative;
+      z-index:0;
+      min-height:300vh; /* long page */
+    }
+
+    /* This overlay makes the background visible everywhere (not just hero) */
+    .spaceWash{
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      background:
+        radial-gradient(1000px 700px at 50% 120px, rgba(0,0,0,0.86), rgba(0,0,0,0.96) 55%, rgba(0,0,0,0.88)),
+        radial-gradient(1200px 900px at 50% 70%, rgba(var(--royal),0.05), transparent 70%);
+      opacity:0.95;
+    }
+
+    /* ===== Hero ===== */
     .hero{
       min-height:100vh;
       display:flex;
@@ -95,7 +112,6 @@
       position:relative;
     }
 
-    /* readability vignette */
     .heroVignette{
       position:absolute;
       inset:0;
@@ -106,7 +122,6 @@
       z-index:1;
     }
 
-    /* IMPORTANT: Logo stays stable (no animation) */
     .logo{
       width:300px;
       max-width:85vw;
@@ -115,7 +130,6 @@
       box-shadow: 0 0 18px rgba(var(--royal),0.22), 0 0 44px rgba(var(--royal),0.10);
     }
 
-    /* Social icons (NO scaling, only glow) */
     .socialRow{
       display:flex;
       gap:14px;
@@ -136,7 +150,6 @@
       box-shadow: 0 0 14px rgba(var(--royal),0.16), 0 0 30px rgba(var(--royal),0.10);
     }
 
-    /* Contract (NO scaling, only glow) */
     .copyWrap{
       margin-top:52px;
       display:flex;
@@ -182,8 +195,11 @@
       font-size:11px;
     }
 
-    /* Long scroll space (empty for now) */
-    .space{ min-height:200vh; }
+    /* below hero: just empty space for now but with a subtle gradient so it's not “black” */
+    .below{
+      height:200vh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.0), rgba(var(--royal),0.03), rgba(0,0,0,0.0));
+    }
   </style>
 </head>
 
@@ -211,45 +227,48 @@
     <span class="dust d2" style="left:94%; bottom:-180px; --dx:-10px; --dur: 230s; --op:0.26; --fadeExtra:1160px;"></span>
   </div>
 
-  <section class="hero">
-    <div class="heroVignette"></div>
+  <div class="page">
+    <div class="spaceWash"></div>
 
-    <div style="position:relative; z-index:3;">
-      <img class="logo" src="bild.jpg?v=29" alt="fuckonbase">
+    <section class="hero">
+      <div class="heroVignette"></div>
 
-      <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
-        coming soon
-      </div>
+      <div style="position:relative; z-index:3;">
+        <img class="logo" src="bild.jpg?v=30" alt="fuckonbase">
 
-      <div class="socialRow">
-        <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-          <img src="x.png?v=29" alt="X" style="width:20px;height:20px;">
-        </a>
-        <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="dex.png?v=29" alt="Dexscreener" style="width:20px;height:20px;">
-        </a>
-        <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="gecko.png?v=29" alt="GeckoTerminal" style="width:20px;height:20px;">
-        </a>
-        <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-          <img src="tg.png?v=29" alt="Telegram" style="width:20px;height:20px;">
-        </a>
-      </div>
-
-      <div class="copyWrap">
-        <div class="contractBox" id="copyBtn" role="button" aria-label="Copy contract">
-          <div class="contractLabel">Contract</div>
-          <div class="contractFull" id="contractFull"></div>
+        <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
+          coming soon
         </div>
-        <div class="status" id="copyStatus">
-          <span class="check">✓</span> copied
+
+        <div class="socialRow">
+          <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
+            <img src="x.png?v=30" alt="X" style="width:20px;height:20px;">
+          </a>
+          <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
+            <img src="dex.png?v=30" alt="Dexscreener" style="width:20px;height:20px;">
+          </a>
+          <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
+            <img src="gecko.png?v=30" alt="GeckoTerminal" style="width:20px;height:20px;">
+          </a>
+          <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
+            <img src="tg.png?v=30" alt="Telegram" style="width:20px;height:20px;">
+          </a>
+        </div>
+
+        <div class="copyWrap">
+          <div class="contractBox" id="copyBtn" role="button" aria-label="Copy contract">
+            <div class="contractLabel">Contract</div>
+            <div class="contractFull" id="contractFull"></div>
+          </div>
+          <div class="status" id="copyStatus">
+            <span class="check">✓</span> copied
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- empty scroll area for now -->
-  <div class="space"></div>
+    <div class="below"></div>
+  </div>
 
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
