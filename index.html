@@ -37,44 +37,13 @@
       opacity:1;
     }
 
-    .beam{
-      position:absolute;
-      width:520px;
-      height:1500px;
-      top:72%;
-      left:50%;
-      transform: translate(-50%,-50%) rotate(14deg);
-      background: linear-gradient(to bottom, rgba(var(--royal),0.00), rgba(var(--royal),0.05), rgba(var(--royal),0.00));
-      filter: blur(30px);
-      opacity:0.45;
-      animation: beamMove 24s ease-in-out infinite;
-    }
-    .beam.b2{
-      width:420px;
-      height:1400px;
-      top:70%;
-      transform: translate(-50%,-50%) rotate(-16deg);
-      opacity:0.35;
-      animation: beamMove2 30s ease-in-out infinite;
-    }
-    @keyframes beamMove{
-      0%   { transform: translate(-52%,-52%) rotate(12deg); opacity:0.32; }
-      50%  { transform: translate(-48%,-50%) rotate(16deg); opacity:0.52; }
-      100% { transform: translate(-52%,-52%) rotate(12deg); opacity:0.32; }
-    }
-    @keyframes beamMove2{
-      0%   { transform: translate(-48%,-52%) rotate(-18deg); opacity:0.26; }
-      50%  { transform: translate(-52%,-50%) rotate(-14deg); opacity:0.44; }
-      100% { transform: translate(-48%,-52%) rotate(-18deg); opacity:0.26; }
-    }
-
     /* ===== Hero ===== */
     .hero{
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:24px;
+      padding:22px;
       text-align:center;
       position:relative;
     }
@@ -90,7 +59,7 @@
     .heroFadeBottom{
       position:absolute;
       left:0; right:0; bottom:0;
-      height:320px;
+      height:280px;
       background: linear-gradient(to bottom,
         rgba(0,0,0,0) 0%,
         rgba(0,0,0,0.06) 30%,
@@ -101,175 +70,191 @@
     }
 
     @keyframes glowPulse{
-      0%{ box-shadow:0 0 14px rgba(var(--royal),0.26), 0 0 30px rgba(var(--royal),0.12); }
-      50%{ box-shadow:0 0 28px rgba(var(--royal),0.52), 0 0 60px rgba(var(--royal),0.20); }
-      100%{ box-shadow:0 0 14px rgba(var(--royal),0.26), 0 0 30px rgba(var(--royal),0.12); }
+      0%{ box-shadow:0 0 12px rgba(var(--royal),0.24), 0 0 26px rgba(var(--royal),0.10); }
+      50%{ box-shadow:0 0 24px rgba(var(--royal),0.48), 0 0 52px rgba(var(--royal),0.18); }
+      100%{ box-shadow:0 0 12px rgba(var(--royal),0.24), 0 0 26px rgba(var(--royal),0.10); }
     }
 
     .social{
-      width:44px;height:44px;
+      width:40px;height:40px;
       display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(255,255,255,0.22);
+      border:1px solid rgba(255,255,255,0.20);
       border-radius:12px;
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
       text-decoration:none;
       background: rgba(255,255,255,0.02);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
     }
     .social:hover{
-      transform: scale(1.12);
-      border-color: rgba(var(--royal),0.55);
-      box-shadow: 0 0 14px rgba(var(--royal),0.18), 0 0 34px rgba(var(--royal),0.10);
+      transform: scale(1.08);
+      border-color: rgba(var(--royal),0.50);
+      box-shadow: 0 0 12px rgba(var(--royal),0.16), 0 0 28px rgba(var(--royal),0.09);
     }
 
     .copyWrap{
-      margin-top:52px;
+      margin-top:38px;
       display:flex;
       flex-direction:column;
       align-items:center;
       gap:10px;
     }
     .contractBox{
-      border:1px solid rgba(255,255,255,0.20);
+      border:1px solid rgba(255,255,255,0.18);
       border-radius:12px;
-      padding:12px 14px;
-      max-width:min(92vw, 760px);
+      padding:9px 11px;
+      max-width:min(92vw, 700px);
       background: rgba(255,255,255,0.02);
       cursor:pointer;
-      transition: box-shadow .25s ease, border-color .25s ease;
+      transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
     .contractBox:hover{
-      border-color: rgba(var(--royal),0.52);
-      box-shadow: 0 0 16px rgba(var(--royal),0.18), 0 0 40px rgba(var(--royal),0.10);
+      border-color: rgba(var(--royal),0.46);
+      box-shadow: 0 0 14px rgba(var(--royal),0.16), 0 0 34px rgba(var(--royal),0.08);
     }
-    .contractLabel{ font-size:12px; opacity:0.65; margin-bottom:4px; }
+    .contractLabel{ font-size:11px; opacity:0.62; margin-bottom:4px; }
     .contractFull{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size:12px;
+      font-size:11px;
       word-break: break-all;
       opacity:0.95;
     }
     .status{
-      font-size:12px;
+      font-size:11px;
       opacity:0;
       display:flex;
       align-items:center;
       gap:6px;
-      transition: opacity .25s ease;
+      transition: opacity .2s ease;
     }
     .status.show{ opacity:0.85; }
     .check{
       width:14px;height:14px;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(var(--royal),0.45);
-      box-shadow: 0 0 10px rgba(var(--royal),0.14);
+      border:1px solid rgba(var(--royal),0.40);
+      box-shadow: 0 0 10px rgba(var(--royal),0.12);
       font-size:11px;
     }
 
-    /* ===== Lore layout ===== */
+    /* ===== Lore (smaller + hover grow) ===== */
     .lore{
-      padding: 72px 18px 120px;
-      max-width: 1200px;
+      padding: 56px 14px 110px;
+      max-width: 1080px;
       margin: 0 auto;
     }
     .loreTitle{
-      font-size: clamp(22px, 3.2vw, 34px);
+      font-size: clamp(18px, 2.3vw, 28px);
       line-height: 1.15;
-      letter-spacing: 0.3px;
-      margin: 0 0 22px 0;
+      letter-spacing: 0.2px;
+      margin: 0 0 18px 0;
       opacity: 0.95;
       text-align:center;
     }
+
     .grid{
       display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 18px;
+      gap: 12px;
     }
 
+    /* Straight tiles */
     .tile{
-      position:relative;
-      border:1px solid rgba(255,255,255,0.14);
-      border-radius:18px;
+      border:1px solid rgba(255,255,255,0.13);
+      border-radius:14px;
       background: rgba(255,255,255,0.02);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       overflow:hidden;
-      box-shadow:
-        0 0 22px rgba(var(--royal),0.08),
-        0 0 60px rgba(var(--royal),0.05);
-      transform: translateY(var(--y, 0px)) rotate(var(--r, 0deg));
+      box-shadow: 0 0 16px rgba(var(--royal),0.06), 0 0 44px rgba(var(--royal),0.03);
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
-    .tile::before{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: radial-gradient(circle at 30% 25%, rgba(var(--royal),0.08), transparent 55%);
-      filter: blur(18px);
-      opacity:0.7;
-      pointer-events:none;
-    }
+
     .tileInner{
-      position:relative;
-      z-index:1;
       display:flex;
-      gap:14px;
-      padding:14px;
+      gap:10px;
+      padding:10px;
       align-items:flex-start;
     }
-    .tile.stack .tileInner{ flex-direction:column; }
 
+    .tile.stack .tileInner{ flex-direction:column; gap:8px; }
+    .tile.tall .tileInner{ flex-direction:column; gap:8px; }
+
+    /* smaller images */
     .imgWrap{
-      flex: 0 0 auto;
-      width: min(260px, 42vw);
+      flex:0 0 auto;
+      width: 120px;
+      transition: transform .22s ease, filter .22s ease;
+      transform-origin: center;
     }
-    .tile.stack .imgWrap{ width: 100%; }
+    .tile.stack .imgWrap,
+    .tile.tall .imgWrap{ width:100%; }
 
     .imgWrap img{
       width:100%;
       height:auto;
       display:block;
-      border-radius:14px;
+      border-radius:12px;
       border:1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 0 18px rgba(var(--royal),0.08);
+      box-shadow: 0 0 12px rgba(var(--royal),0.05);
+      transition: transform .22s ease, box-shadow .22s ease, filter .22s ease;
+      transform-origin: center;
     }
 
-    .textWrap{
-      flex: 1 1 auto;
-      min-width: 0;
-    }
+    .textWrap{ flex:1; min-width:0; }
+
     .num{
-      font-size:12px;
+      font-size:10px;
       letter-spacing:1.8px;
       text-transform:uppercase;
-      opacity:0.55;
-      margin-bottom:6px;
+      opacity:0.52;
+      margin-bottom:5px;
     }
     .heading{
-      font-size:15px;
-      letter-spacing:0.2px;
-      margin:0 0 8px 0;
+      font-size:13px;
+      margin:0 0 6px 0;
       opacity:0.92;
     }
     .desc{
       margin:0;
-      font-size:14px;
-      line-height:1.55;
-      opacity:0.75;
+      font-size:12px;
+      line-height:1.52;
+      opacity:0.74;
     }
 
-    .span-6{ grid-column: span 6; }
-    .span-5{ grid-column: span 5; }
-    .span-7{ grid-column: span 7; }
-    .span-4{ grid-column: span 4; }
-    .span-8{ grid-column: span 8; }
+    /* more "längliche" blocks */
+    .span-12{ grid-column: span 12; }
+    .span-8 { grid-column: span 8;  }
+    .span-7 { grid-column: span 7;  }
+    .span-6 { grid-column: span 6;  }
+    .span-5 { grid-column: span 5;  }
+    .span-4 { grid-column: span 4;  }
+
+    /* HOVER / TOUCH EFFECT */
+    .tile:hover,
+    .tile:active{
+      transform: translateY(-3px);
+      border-color: rgba(var(--royal),0.46);
+      box-shadow: 0 0 18px rgba(var(--royal),0.12), 0 0 54px rgba(var(--royal),0.06);
+    }
+
+    .tile:hover .imgWrap img,
+    .tile:active .imgWrap img{
+      transform: scale(1.10);
+      box-shadow: 0 0 18px rgba(var(--royal),0.16), 0 0 48px rgba(var(--royal),0.08);
+      filter: saturate(1.06);
+    }
+
+    /* Mobile: no “sticky hover” issues */
+    @media (hover: none){
+      .tile:hover{ transform:none; border-color: rgba(255,255,255,0.13); box-shadow: 0 0 16px rgba(var(--royal),0.06), 0 0 44px rgba(var(--royal),0.03); }
+      .tile:hover .imgWrap img{ transform:none; box-shadow: 0 0 12px rgba(var(--royal),0.05); filter:none; }
+    }
 
     @media (max-width: 900px){
       .grid{ grid-template-columns: 1fr; }
-      .span-6,.span-5,.span-7,.span-4,.span-8{ grid-column: span 1; }
-      .tile{ transform: none; }
+      .span-12,.span-8,.span-7,.span-6,.span-5,.span-4{ grid-column: span 1; }
       .tileInner{ flex-direction:column; }
       .imgWrap{ width:100%; }
     }
@@ -277,36 +262,33 @@
 </head>
 
 <body>
-  <div class="bg">
-    <div class="beam"></div>
-    <div class="beam b2"></div>
-  </div>
+  <div class="bg"></div>
 
   <!-- HERO -->
   <section class="hero">
     <div class="heroVignette"></div>
 
     <div style="position:relative; z-index:3;">
-      <img src="bild.jpg?v=32"
+      <img src="bild.jpg?v=34"
            alt="fuckonbase"
-           style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 4s ease-in-out infinite;">
+           style="width:260px;max-width:80vw;border-radius:14px;margin-bottom:18px;animation:glowPulse 4s ease-in-out infinite;">
 
-      <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
+      <div style="font-size:14px; letter-spacing:1.4px; margin-bottom:18px; opacity:0.75;">
         coming soon
       </div>
 
-      <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
         <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-          <img src="x.png?v=32" alt="X" style="width:20px;height:20px;">
+          <img src="x.png?v=34" alt="X" style="width:18px;height:18px;">
         </a>
         <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="dex.png?v=32" alt="Dexscreener" style="width:20px;height:20px;">
+          <img src="dex.png?v=34" alt="Dexscreener" style="width:18px;height:18px;">
         </a>
         <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-          <img src="gecko.png?v=32" alt="GeckoTerminal" style="width:20px;height:20px;">
+          <img src="gecko.png?v=34" alt="GeckoTerminal" style="width:18px;height:18px;">
         </a>
         <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-          <img src="tg.png?v=32" alt="Telegram" style="width:20px;height:20px;">
+          <img src="tg.png?v=34" alt="Telegram" style="width:18px;height:18px;">
         </a>
       </div>
 
@@ -329,169 +311,155 @@
     <h2 class="loreTitle">Fuck is the most versatile word in the language.</h2>
 
     <div class="grid">
-      <!-- 01 -->
-      <article class="tile span-7 stack" style="--r:-0.7deg; --y:6px;">
+      <article class="tile span-12">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000000.png?v=32" alt="Lore 01"></div>
+          <div class="imgWrap"><img src="fuck lore_000000.png?v=34" alt="Lore 01"></div>
           <div class="textWrap">
             <div class="num">01</div>
-            <h3 class="heading">Discourse filler</h3>
+            <div class="heading">Discourse filler</div>
             <p class="desc">Used to structure speech rhythmically rather than semantically. The word carries little literal meaning and mainly expresses intensity, agitation, or emphasis in spoken language.</p>
           </div>
         </div>
       </article>
 
-      <!-- 02 -->
-      <article class="tile span-5" style="--r:0.6deg; --y:18px;">
+      <article class="tile span-7">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000001.png?v=32" alt="Lore 02"></div>
+          <div class="imgWrap"><img src="fuck lore_000001.png?v=34" alt="Lore 02"></div>
           <div class="textWrap">
             <div class="num">02</div>
-            <h3 class="heading">Adverb / intensifier</h3>
+            <div class="heading">Adverb / intensifier</div>
             <p class="desc">Functions as a strong amplifier of emotion or degree. It adds force comparable to “very,” but with much higher emotional impact and informality.</p>
           </div>
         </div>
       </article>
 
-      <!-- 03 -->
-      <article class="tile span-6 stack" style="--r:0.2deg; --y:-6px;">
+      <article class="tile span-5 tall">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000002.png?v=32" alt="Lore 03"></div>
+          <div class="imgWrap"><img src="fuck lore_000002.png?v=34" alt="Lore 03"></div>
           <div class="textWrap">
             <div class="num">03</div>
-            <h3 class="heading">Adjective</h3>
+            <div class="heading">Adjective</div>
             <p class="desc">Modifies a noun to inject emotional weight rather than factual information. This use signals frustration, contempt, or emphasis and contributes mood instead of content.</p>
           </div>
         </div>
       </article>
 
-      <!-- 04 -->
-      <article class="tile span-6" style="--r:-0.5deg; --y:22px;">
+      <article class="tile span-6">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000003.png?v=32" alt="Lore 04"></div>
+          <div class="imgWrap"><img src="fuck lore_000003.png?v=34" alt="Lore 04"></div>
           <div class="textWrap">
             <div class="num">04</div>
-            <h3 class="heading">Noun (abstract)</h3>
+            <div class="heading">Noun (abstract)</div>
             <p class="desc">Refers to a situation, outcome, or level of concern rather than a concrete object. Meaning is highly context-dependent and often tied to disbelief or indifference.</p>
           </div>
         </div>
       </article>
 
-      <!-- 05 -->
-      <article class="tile span-8 stack" style="--r:0.9deg; --y:8px;">
+      <article class="tile span-6">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000004.png?v=32" alt="Lore 05"></div>
+          <div class="imgWrap"><img src="fuck lore_000004.png?v=34" alt="Lore 05"></div>
           <div class="textWrap">
             <div class="num">05</div>
-            <h3 class="heading">Question intensifier</h3>
+            <div class="heading">Question intensifier</div>
             <p class="desc">Adds emotional force to a question without changing its factual meaning. It raises urgency, disbelief, or hostility and signals strong emotional involvement.</p>
           </div>
         </div>
       </article>
 
-      <!-- 06 -->
-      <article class="tile span-4" style="--r:-0.8deg; --y:30px;">
+      <article class="tile span-4 tall">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000005.png?v=32" alt="Lore 06"></div>
+          <div class="imgWrap"><img src="fuck lore_000005.png?v=34" alt="Lore 06"></div>
           <div class="textWrap">
             <div class="num">06</div>
-            <h3 class="heading">Phrasal verb base</h3>
+            <div class="heading">Phrasal verb base</div>
             <p class="desc">Combines with particles to form new verbs with distinct meanings. These constructions are highly productive and often far removed from the original sexual sense.</p>
           </div>
         </div>
       </article>
 
-      <!-- 07 -->
-      <article class="tile span-5 stack" style="--r:0.4deg; --y:0px;">
+      <article class="tile span-8">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000006.png?v=32" alt="Lore 07"></div>
+          <div class="imgWrap"><img src="fuck lore_000006.png?v=34" alt="Lore 07"></div>
           <div class="textWrap">
             <div class="num">07</div>
-            <h3 class="heading">General verb</h3>
+            <div class="heading">General verb</div>
             <p class="desc">Used metaphorically to express damage, failure, harm, or negative impact. The meaning is non-sexual and replaces more specific verbs for emotional emphasis.</p>
           </div>
         </div>
       </article>
 
-      <!-- 08 -->
-      <article class="tile span-7" style="--r:-0.2deg; --y:16px;">
+      <article class="tile span-7">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000007.png?v=32" alt="Lore 08"></div>
+          <div class="imgWrap"><img src="fuck lore_000007.png?v=34" alt="Lore 08"></div>
           <div class="textWrap">
             <div class="num">08</div>
-            <h3 class="heading">Past participle / adjectival state</h3>
+            <div class="heading">Past participle / adjectival state</div>
             <p class="desc">Describes a condition of being ruined, doomed, or exhausted. Often dramatic or exaggerated, frequently implying that recovery is unlikely.</p>
           </div>
         </div>
       </article>
 
-      <!-- 09 -->
-      <article class="tile span-6" style="--r:0.8deg; --y:-8px;">
+      <article class="tile span-5 tall">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000008.png?v=32" alt="Lore 09"></div>
+          <div class="imgWrap"><img src="fuck lore_000008.png?v=34" alt="Lore 09"></div>
           <div class="textWrap">
             <div class="num">09</div>
-            <h3 class="heading">Reflexive verb</h3>
+            <div class="heading">Reflexive verb</div>
             <p class="desc">Indicates self-inflicted harm or sabotage. This use emphasizes personal responsibility, regret, or irony, often with a self-critical tone.</p>
           </div>
         </div>
       </article>
 
-      <!-- 10 -->
-      <article class="tile span-6 stack" style="--r:-0.4deg; --y:20px;">
+      <article class="tile span-12">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000009.png?v=32" alt="Lore 10"></div>
+          <div class="imgWrap"><img src="fuck lore_000009.png?v=34" alt="Lore 10"></div>
           <div class="textWrap">
             <div class="num">10</div>
-            <h3 class="heading">Idiomatic / fixed expressions</h3>
+            <div class="heading">Idiomatic / fixed expressions</div>
             <p class="desc">Appears in conventionalized phrases whose meanings are not literal. These expressions function as single semantic units and signal fluency and familiarity.</p>
           </div>
         </div>
       </article>
 
-      <!-- 11 -->
-      <article class="tile span-5" style="--r:0.3deg; --y:2px;">
+      <article class="tile span-6">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000010.png?v=32" alt="Lore 11"></div>
+          <div class="imgWrap"><img src="fuck lore_000010.png?v=34" alt="Lore 11"></div>
           <div class="textWrap">
             <div class="num">11</div>
-            <h3 class="heading">Interjection</h3>
+            <div class="heading">Interjection</div>
             <p class="desc">Used as a standalone emotional reaction. Meaning is derived entirely from context and intonation and reflects immediate emotional response.</p>
           </div>
         </div>
       </article>
 
-      <!-- 12 -->
-      <article class="tile span-7 stack" style="--r:-0.6deg; --y:24px;">
+      <article class="tile span-6">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000011.png?v=32" alt="Lore 12"></div>
+          <div class="imgWrap"><img src="fuck lore_000011.png?v=34" alt="Lore 12"></div>
           <div class="textWrap">
             <div class="num">12</div>
-            <h3 class="heading">Insult noun (person)</h3>
+            <div class="heading">Insult noun (person)</div>
             <p class="desc">Functions as a negative label for a person. The word carries strong emotional judgment with little descriptive content.</p>
           </div>
         </div>
       </article>
 
-      <!-- 13 -->
-      <article class="tile span-6" style="--r:0.7deg; --y:-4px;">
+      <article class="tile span-5 tall">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000012.png?v=32" alt="Lore 13"></div>
+          <div class="imgWrap"><img src="fuck lore_000012.png?v=34" alt="Lore 13"></div>
           <div class="textWrap">
             <div class="num">13</div>
-            <h3 class="heading">Literal verb</h3>
+            <div class="heading">Literal verb</div>
             <p class="desc">Refers directly to the sexual act. This is the original, concrete meaning of the word and is typically explicit and unambiguous.</p>
           </div>
         </div>
       </article>
 
-      <!-- 14 -->
-      <article class="tile span-6 stack" style="--r:-0.1deg; --y:18px;">
+      <article class="tile span-7">
         <div class="tileInner">
-          <div class="imgWrap"><img src="fuck lore_000013.png?v=32" alt="Lore 14"></div>
+          <div class="imgWrap"><img src="fuck lore_000013.png?v=34" alt="Lore 14"></div>
           <div class="textWrap">
             <div class="num">14</div>
-            <h3 class="heading">Aggressive / hostile verb</h3>
+            <div class="heading">Aggressive / hostile verb</div>
             <p class="desc">Used to attack, dismiss, or provoke another person. The primary function is social confrontation rather than literal meaning.</p>
           </div>
         </div>
