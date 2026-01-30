@@ -141,6 +141,89 @@
       position:relative;
     }
 
+    /* ====== LORE LAYOUT ====== */
+    .lore{
+      width:min(980px, 100%);
+      display:flex;
+      flex-direction:column;
+      gap:90px;
+    }
+    .loreItem{
+      display:flex;
+      gap:48px;
+      align-items:center;
+    }
+    .loreItem img{
+      width:360px;
+      max-width:42vw;
+      border-radius:10px;
+    }
+    .loreText h2{
+      margin:0 0 14px 0;
+      font-size:44px;
+    }
+    .loreText p{
+      margin:0;
+      font-size:16px;
+      line-height:1.7;
+      opacity:0.82;
+      max-width:560px;
+    }
+
+    @media (max-width: 820px){
+      .loreItem{
+        flex-direction:column;
+        text-align:center;
+      }
+      .loreItem img{
+        max-width:92vw;
+      }
+      .loreText h2{
+        font-size:34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div>
+    <img src="bild.jpg?v=22"
+         alt="fuckonbase"
+         style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 4s ease-in-out infinite;">
+
+    <div style="font-size:16px;letter-spacing:1.5px;margin-bottom:28px;opacity:.75;">
+      coming soon
+    </div>
+
+    <!-- SOCIAL ICONS (ordered) -->
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <a class="social" href="https://x.com/fuck_on_base" target="_blank"><img src="x.png?v=22" width="20"></a>
+      <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank"><img src="tg.png?v=22" width="20"></a>
+      <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank"><img src="dex.png?v=22" width="20"></a>
+      <a class="social" href="https://www.dextools.io/app/token/0xc8f8c5a9dff280cde517d197c82ee10fcb46bb07" target="_blank"><img src="dextool.png" width="20"></a>
+      <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank"><img src="gecko.png?v=22" width="20"></a>
+    </div>
+
+    <!-- CONTRACT -->
+    <div class="copyWrap">
+      <div class="contractBox" id="copyBtn">
+        <div class="contractLabel">Contract</div>
+        <div class="contractFull" id="contractFull"></div>
+      </div>
+      <div class="status" id="copyStatus"><span class="check">✓</span> copied</div>
+    </div>
+  </div>
+
+  <div class="scrollHint">
+    <div class="scrollText">scroll</div>
+    <div class="scrollDot"></div>
+  </div>
+
+  <div class="fadeInTeaser"></div>
+</section>
+
     /* ====== LORE LAYOUT (image left, text right) ====== */
     .lore{
       width:min(980px, 100%);
