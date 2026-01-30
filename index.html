@@ -16,7 +16,7 @@
       overflow-x:hidden;
     }
 
-    /* ===== Space Background (fixed) ===== */
+    /* ===== Space background (stable) ===== */
     .bg{
       position:fixed;
       inset:0;
@@ -29,9 +29,9 @@
       position:absolute;
       inset:-25%;
       background:
-        radial-gradient(1100px 800px at 18% 80%, rgba(var(--royal),0.11), transparent 62%),
-        radial-gradient(1200px 860px at 82% 86%, rgba(var(--royal),0.09), transparent 64%),
-        radial-gradient(1400px 900px at 50% 115%, rgba(var(--royal),0.07), transparent 62%),
+        radial-gradient(1100px 800px at 18% 80%, rgba(var(--royal),0.10), transparent 62%),
+        radial-gradient(1200px 860px at 82% 86%, rgba(var(--royal),0.08), transparent 64%),
+        radial-gradient(1400px 900px at 50% 115%, rgba(var(--royal),0.06), transparent 62%),
         radial-gradient(900px 600px at 50% 15%, rgba(var(--royal),0.05), transparent 70%);
       filter: blur(18px);
       opacity:0.95;
@@ -60,14 +60,14 @@
       position:absolute;
       width:2px; height:2px;
       border-radius:999px;
-      background: rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.14);
       box-shadow: 0 0 10px rgba(var(--royal),0.06);
       opacity:0;
       animation: drift var(--dur) linear infinite;
       will-change: transform, opacity;
     }
     .dust.d2{ width:1px; height:1px; }
-    .dust.d3{ width:3px; height:3px; background: rgba(255,255,255,0.11); }
+    .dust.d3{ width:3px; height:3px; background: rgba(255,255,255,0.10); }
 
     @keyframes drift{
       0%   { transform: translate3d(0, 60px, 0); opacity:0; }
@@ -76,11 +76,15 @@
       100% { transform: translate3d(var(--dx), calc(-260vh - var(--fadeExtra)), 0); opacity:0; }
     }
 
-    .page{
-      position:relative;
-      min-height:320vh;
+    @media (prefers-reduced-motion: reduce){
+      .orb, .dust{ animation:none !important; }
     }
 
+    /* ===== Page overlay so it feels not “empty black” ===== */
+    .page{
+      position:relative;
+      min-height:100vh;
+    }
     .spaceWash{
       position:absolute;
       inset:0;
@@ -120,6 +124,7 @@
       box-shadow: 0 0 18px rgba(var(--royal),0.22), 0 0 44px rgba(var(--royal),0.10);
     }
 
+    /* Social icons: NO scale (stabil), nur Glow */
     .socialRow{
       display:flex;
       gap:14px;
@@ -140,6 +145,7 @@
       box-shadow: 0 0 14px rgba(var(--royal),0.16), 0 0 30px rgba(var(--royal),0.10);
     }
 
+    /* Contract */
     .copyWrap{
       margin-top:52px;
       display:flex;
@@ -167,7 +173,6 @@
       word-break: break-all;
       opacity:0.95;
     }
-
     .status{
       font-size:12px;
       opacity:0;
@@ -185,11 +190,19 @@
       font-size:11px;
     }
 
-    /* ===== Content Grid (14 tiles) ===== */
-    .content{
-      padding:80px 18px 120px;
+    /* ===== Lore gallery ===== */
+    .lore{
+      padding:80px 18px 140px;
       max-width:1100px;
       margin:0 auto;
+    }
+    .loreTitle{
+      font-size:12px;
+      letter-spacing:1.8px;
+      text-transform:uppercase;
+      opacity:0.65;
+      margin:0 0 14px;
+      text-align:center;
     }
     .grid{
       display:grid;
@@ -199,30 +212,24 @@
     @media (min-width: 900px){
       .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
     }
-    .tile{
+
+    figure.card{
+      margin:0;
       border:1px solid rgba(255,255,255,0.14);
       border-radius:16px;
       background: rgba(0,0,0,0.22);
-      padding:14px;
-      box-shadow: 0 0 22px rgba(var(--royal),0.10);
+      padding:12px;
+      box-shadow: 0 0 22px rgba(var(--royal),0.08);
     }
-    .tile img{
+    figure.card img{
       width:100%;
-      border-radius:12px;
       display:block;
-      opacity:0.92;
+      border-radius:12px;
     }
-    .tile .t{
+    figure.card figcaption{
       margin-top:10px;
-      font-size:13px;
-      opacity:0.85;
-      letter-spacing:0.3px;
-    }
-    .tile .s{
-      margin-top:6px;
       font-size:12px;
-      opacity:0.60;
-      line-height:1.45;
+      opacity:0.65;
     }
   </style>
 </head>
@@ -254,11 +261,12 @@
   <div class="page">
     <div class="spaceWash"></div>
 
+    <!-- HERO -->
     <section class="hero">
       <div class="heroVignette"></div>
 
       <div style="position:relative; z-index:3;">
-        <img class="logo" src="bild.jpg?v=32" alt="fuckonbase">
+        <img class="logo" src="bild.jpg?v=33" alt="fuckonbase">
 
         <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
           coming soon
@@ -266,16 +274,16 @@
 
         <div class="socialRow">
           <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-            <img src="x.png?v=32" alt="X" style="width:20px;height:20px;">
+            <img src="x.png?v=33" alt="X" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="dex.png?v=32" alt="Dexscreener" style="width:20px;height:20px;">
+            <img src="dex.png?v=33" alt="Dexscreener" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="gecko.png?v=32" alt="GeckoTerminal" style="width:20px;height:20px;">
+            <img src="gecko.png?v=33" alt="GeckoTerminal" style="width:20px;height:20px;">
           </a>
           <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-            <img src="tg.png?v=32" alt="Telegram" style="width:20px;height:20px;">
+            <img src="tg.png?v=33" alt="Telegram" style="width:20px;height:20px;">
           </a>
         </div>
 
@@ -291,23 +299,25 @@
       </div>
     </section>
 
-    <section class="content">
+    <!-- LORE (14 images) -->
+    <section class="lore">
+      <div class="loreTitle">Lore</div>
+
       <div class="grid">
-        <!-- 14 tiles (placeholder) -->
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 1</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 2</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 3</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 4</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 5</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 6</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 7</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 8</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 9</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 10</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 11</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 12</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 13</div><div class="s">Placeholder content.</div></div>
-        <div class="tile"><img src="bild.jpg?v=32" alt=""><div class="t">Section 14</div><div class="s">Placeholder content.</div></div>
+        <figure class="card"><img src="fuck%20lore_000000.png" alt="Lore 000000"><figcaption>fuck lore_000000</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000001.png" alt="Lore 000001"><figcaption>fuck lore_000001</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000002.png" alt="Lore 000002"><figcaption>fuck lore_000002</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000003.png" alt="Lore 000003"><figcaption>fuck lore_000003</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000004.png" alt="Lore 000004"><figcaption>fuck lore_000004</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000005.png" alt="Lore 000005"><figcaption>fuck lore_000005</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000006.png" alt="Lore 000006"><figcaption>fuck lore_000006</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000007.png" alt="Lore 000007"><figcaption>fuck lore_000007</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000008.png" alt="Lore 000008"><figcaption>fuck lore_000008</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000009.png" alt="Lore 000009"><figcaption>fuck lore_000009</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000010.png" alt="Lore 000010"><figcaption>fuck lore_000010</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000011.png" alt="Lore 000011"><figcaption>fuck lore_000011</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000012.png" alt="Lore 000012"><figcaption>fuck lore_000012</figcaption></figure>
+        <figure class="card"><img src="fuck%20lore_000013.png" alt="Lore 000013"><figcaption>fuck lore_000013</figcaption></figure>
       </div>
     </section>
   </div>
