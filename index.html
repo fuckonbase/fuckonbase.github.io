@@ -1,177 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>fuckonbase</title>
 
   <style>
     :root{ --royal: 30, 60, 200; }
 
-    html, body{
+    body{
       margin:0;
       background:#000;
       color:#fff;
-      font-family: Arial, sans-serif;
+      font-family:Arial, sans-serif;
       overflow-x:hidden;
     }
 
-    /* ===== Space background (stable) ===== */
-    .bg{
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      pointer-events:none;
-      overflow:hidden;
-    }
-    .bg::before{
-      content:"";
-      position:absolute;
-      inset:-25%;
-      background:
-        radial-gradient(1100px 800px at 18% 80%, rgba(var(--royal),0.10), transparent 62%),
-        radial-gradient(1200px 860px at 82% 86%, rgba(var(--royal),0.08), transparent 64%),
-        radial-gradient(1400px 900px at 50% 115%, rgba(var(--royal),0.06), transparent 62%),
-        radial-gradient(900px 600px at 50% 15%, rgba(var(--royal),0.05), transparent 70%);
-      filter: blur(18px);
-      opacity:0.95;
-    }
-
-    .orb{
-      position:absolute;
-      width: var(--s);
-      height: var(--s);
-      border-radius:999px;
-      background: radial-gradient(circle at 30% 30%,
-        rgba(var(--royal),0.16),
-        rgba(var(--royal),0.06) 45%,
-        rgba(var(--royal),0.00) 72%);
-      opacity: var(--o);
-      animation: orbFloat var(--t) ease-in-out infinite;
-      will-change: transform, opacity;
-    }
-    @keyframes orbFloat{
-      0%   { transform: translate3d(0,0,0); opacity: calc(var(--o) * 0.92); }
-      50%  { transform: translate3d(var(--ox), var(--oy), 0); opacity: var(--o); }
-      100% { transform: translate3d(0,0,0); opacity: calc(var(--o) * 0.92); }
-    }
-
-    .dust{
-      position:absolute;
-      width:2px; height:2px;
-      border-radius:999px;
-      background: rgba(255,255,255,0.14);
-      box-shadow: 0 0 10px rgba(var(--royal),0.06);
-      opacity:0;
-      animation: drift var(--dur) linear infinite;
-      will-change: transform, opacity;
-    }
-    .dust.d2{ width:1px; height:1px; }
-    .dust.d3{ width:3px; height:3px; background: rgba(255,255,255,0.10); }
-
-    @keyframes drift{
-      0%   { transform: translate3d(0, 60px, 0); opacity:0; }
-      12%  { opacity: var(--op); }
-      82%  { opacity: var(--op); }
-      100% { transform: translate3d(var(--dx), calc(-260vh - var(--fadeExtra)), 0); opacity:0; }
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      .orb, .dust{ animation:none !important; }
-    }
-
-    /* ===== Page overlay so it feels not “empty black” ===== */
-    .page{
-      position:relative;
-      min-height:100vh;
-    }
-    .spaceWash{
-      position:absolute;
-      inset:0;
-      z-index:-1;
-      pointer-events:none;
-      background:
-        radial-gradient(1400px 900px at 50% 55%, rgba(var(--royal),0.04), transparent 70%),
-        linear-gradient(to bottom, rgba(0,0,0,0.20), rgba(0,0,0,0.55));
-      opacity:0.95;
-    }
-
-    /* ===== Hero ===== */
+    /* ========== HERO ========== */
     .hero{
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
       padding:24px;
-      text-align:center;
       position:relative;
+      text-align:center;
+      background:#000;
     }
-    .heroVignette{
+
+    .fadeInTeaser{
       position:absolute;
-      inset:0;
-      background:
-        radial-gradient(1000px 650px at 50% 42%, rgba(0,0,0,0.90), rgba(0,0,0,0.985) 72%),
-        linear-gradient(to bottom, rgba(0,0,0,0.96), rgba(0,0,0,0.70) 65%, rgba(0,0,0,0.48));
+      left:0; right:0; bottom:0;
+      height:180px;
+      background: linear-gradient(to top,
+        rgba(var(--royal),0.10),
+        rgba(var(--royal),0.04),
+        rgba(0,0,0,0));
+      opacity:0.35;
       pointer-events:none;
-      z-index:1;
     }
 
-    .logo{
-      width:300px;
-      max-width:85vw;
-      border-radius:14px;
-      margin-bottom:28px;
-      box-shadow: 0 0 18px rgba(var(--royal),0.22), 0 0 44px rgba(var(--royal),0.10);
+    @keyframes glowPulse{
+      0%{ box-shadow:0 0 14px rgba(var(--royal),0.35),0 0 28px rgba(var(--royal),0.20); }
+      50%{ box-shadow:0 0 26px rgba(var(--royal),0.65),0 0 52px rgba(var(--royal),0.35); }
+      100%{ box-shadow:0 0 14px rgba(var(--royal),0.35),0 0 28px rgba(var(--royal),0.20); }
     }
 
-    /* Social icons: NO scale (stabil), nur Glow */
-    .socialRow{
-      display:flex;
-      gap:14px;
-      justify-content:center;
-      flex-wrap:wrap;
-    }
+    /* ========== SOCIAL ICONS ========== */
     .social{
-      width:44px;height:44px;
-      display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(255,255,255,0.22);
+      width:44px;
+      height:44px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border:1px solid rgba(255,255,255,0.25);
       border-radius:12px;
-      background: rgba(255,255,255,0.02);
-      transition: box-shadow .18s ease, border-color .18s ease;
-      text-decoration:none;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
     }
     .social:hover{
-      border-color: rgba(var(--royal),0.55);
-      box-shadow: 0 0 14px rgba(var(--royal),0.16), 0 0 30px rgba(var(--royal),0.10);
+      transform: scale(1.15);
+      border-color: rgba(var(--royal),0.9);
+      box-shadow:0 0 12px rgba(var(--royal),0.6),0 0 24px rgba(var(--royal),0.4);
     }
 
-    /* Contract */
+    /* ========== CONTRACT ========== */
     .copyWrap{
-      margin-top:52px;
+      margin-top:48px;
       display:flex;
       flex-direction:column;
       align-items:center;
-      gap:10px;
+      gap:8px;
     }
     .contractBox{
-      border:1px solid rgba(255,255,255,0.20);
+      border:1px solid rgba(255,255,255,0.22);
       border-radius:12px;
       padding:12px 14px;
-      max-width:min(92vw, 760px);
-      background: rgba(255,255,255,0.02);
+      max-width:92vw;
+      background: rgba(255,255,255,0.03);
       cursor:pointer;
-      transition: box-shadow .18s ease, border-color .18s ease;
+      transition: box-shadow .25s ease, border-color .25s ease;
     }
     .contractBox:hover{
-      border-color: rgba(var(--royal),0.52);
-      box-shadow: 0 0 16px rgba(var(--royal),0.16), 0 0 34px rgba(var(--royal),0.10);
+      border-color: rgba(var(--royal),0.9);
+      box-shadow:0 0 10px rgba(var(--royal),0.45),0 0 22px rgba(var(--royal),0.28);
     }
-    .contractLabel{ font-size:12px; opacity:0.65; margin-bottom:4px; }
+    .contractLabel{ font-size:12px; opacity:.65; margin-bottom:4px; }
     .contractFull{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size:12px;
       word-break: break-all;
-      opacity:0.95;
     }
     .status{
       font-size:12px;
@@ -179,172 +96,300 @@
       display:flex;
       align-items:center;
       gap:6px;
-      transition: opacity .2s ease;
+      transition: opacity .25s ease;
     }
-    .status.show{ opacity:0.85; }
+    .status.show{ opacity:.9; }
     .check{
       width:14px;height:14px;border-radius:50%;
       display:flex;align-items:center;justify-content:center;
-      border:1px solid rgba(var(--royal),0.45);
-      box-shadow: 0 0 10px rgba(var(--royal),0.12);
+      border:1px solid rgba(var(--royal),0.9);
+      box-shadow:0 0 8px rgba(var(--royal),0.45);
       font-size:11px;
     }
 
-    /* ===== Lore gallery ===== */
-    .lore{
-      padding:80px 18px 140px;
-      max-width:1100px;
-      margin:0 auto;
+    /* ========== SCROLL HINT ========== */
+    @keyframes scrollHint{
+      0%{ transform:translateY(0); opacity:.55; }
+      50%{ transform:translateY(8px); opacity:.9; }
+      100%{ transform:translateY(0); opacity:.55; }
     }
-    .loreTitle{
-      font-size:12px;
-      letter-spacing:1.8px;
-      text-transform:uppercase;
-      opacity:0.65;
-      margin:0 0 14px;
-      text-align:center;
+    .scrollHint{
+      position:absolute;
+      bottom:26px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      pointer-events:none;
     }
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap:14px;
-    }
-    @media (min-width: 900px){
-      .grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+    .scrollText{ font-size:12px; letter-spacing:1.6px; opacity:.55; }
+    .scrollDot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(var(--royal),0.75);
+      box-shadow:0 0 10px rgba(var(--royal),0.35);
+      animation: scrollHint 1.8s ease-in-out infinite;
     }
 
-    figure.card{
+    /* ========== SCROLL SECTION ========== */
+    .section{
+      padding:100px 24px;
+      display:flex;
+      justify-content:center;
+      background:#000;
+      position:relative;
+    }
+
+    /* ====== LORE LAYOUT (image left, text right) ====== */
+    .lore{
+      width:min(980px, 100%);
+      display:flex;
+      flex-direction:column;
+      gap:90px;
+    }
+    .loreItem{
+      display:flex;
+      gap:48px;
+      align-items:center;
+    }
+    .loreItem img{
+      width:360px;
+      max-width:42vw;
+      height:auto;
+      border-radius:10px;
+      box-shadow:0 0 18px rgba(var(--royal),0.10),0 0 50px rgba(var(--royal),0.06);
+    }
+    .loreText h2{
+      margin:0 0 14px 0;
+      font-size:44px;
+      line-height:1.05;
+      letter-spacing:0.2px;
+    }
+    .loreText p{
       margin:0;
-      border:1px solid rgba(255,255,255,0.14);
-      border-radius:16px;
-      background: rgba(0,0,0,0.22);
-      padding:12px;
-      box-shadow: 0 0 22px rgba(var(--royal),0.08);
+      font-size:16px;
+      line-height:1.7;
+      opacity:0.82;
+      max-width:560px;
     }
-    figure.card img{
-      width:100%;
-      display:block;
-      border-radius:12px;
-    }
-    figure.card figcaption{
-      margin-top:10px;
-      font-size:12px;
-      opacity:0.65;
+
+    @media (max-width: 820px){
+      .loreItem{
+        flex-direction:column;
+        text-align:center;
+        gap:22px;
+      }
+      .loreItem img{
+        width:min(520px, 92vw);
+        max-width:92vw;
+      }
+      .loreText h2{
+        font-size:34px;
+      }
+      .loreText p{
+        max-width:92vw;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="bg">
-    <!-- Orbs -->
-    <span class="orb" style="left:10%; top:18%; --s:150px; --o:0.42; --ox:14px;  --oy:10px;  --t:26s;"></span>
-    <span class="orb" style="left:26%; top:68%; --s:240px; --o:0.30; --ox:-18px; --oy:14px;  --t:34s;"></span>
-    <span class="orb" style="left:54%; top:36%; --s:180px; --o:0.28; --ox:18px;  --oy:-12px; --t:32s;"></span>
-    <span class="orb" style="left:76%; top:22%; --s:200px; --o:0.32; --ox:-14px; --oy:16px;  --t:38s;"></span>
-    <span class="orb" style="left:86%; top:72%; --s:280px; --o:0.24; --ox:16px;  --oy:-14px; --t:40s;"></span>
 
-    <!-- Dust -->
-    <span class="dust d2" style="left:6%;  bottom:-60px;  --dx: 14px;  --dur: 120s; --op:0.36; --fadeExtra:220px;"></span>
-    <span class="dust"    style="left:14%; bottom:-120px; --dx:-16px; --dur: 160s; --op:0.38; --fadeExtra:520px;"></span>
-    <span class="dust d3" style="left:22%; bottom:-80px;  --dx: 10px;  --dur: 150s; --op:0.30; --fadeExtra:380px;"></span>
-    <span class="dust d2" style="left:30%; bottom:-140px; --dx:-12px; --dur: 180s; --op:0.32; --fadeExtra:720px;"></span>
-    <span class="dust"    style="left:38%; bottom:-90px;  --dx: 16px;  --dur: 170s; --op:0.36; --fadeExtra:460px;"></span>
-    <span class="dust d2" style="left:46%; bottom:-160px; --dx:-10px; --dur: 190s; --op:0.30; --fadeExtra:860px;"></span>
-    <span class="dust"    style="left:54%; bottom:-110px; --dx: 12px;  --dur: 165s; --op:0.36; --fadeExtra:520px;"></span>
-    <span class="dust d3" style="left:62%; bottom:-150px; --dx:-18px; --dur: 210s; --op:0.26; --fadeExtra:980px;"></span>
-    <span class="dust"    style="left:70%; bottom:-95px;  --dx: 14px;  --dur: 175s; --op:0.34; --fadeExtra:560px;"></span>
-    <span class="dust d2" style="left:78%; bottom:-170px; --dx:-14px; --dur: 220s; --op:0.28; --fadeExtra:1080px;"></span>
-    <span class="dust"    style="left:86%; bottom:-120px; --dx: 10px;  --dur: 185s; --op:0.34; --fadeExtra:660px;"></span>
-    <span class="dust d2" style="left:94%; bottom:-180px; --dx:-10px; --dur: 230s; --op:0.26; --fadeExtra:1160px;"></span>
-  </div>
+  <section class="hero">
+    <div>
+      <img src="bild.jpg?v=22"
+           alt="fuckonbase"
+           style="width:300px;max-width:85vw;border-radius:14px;margin-bottom:28px;animation:glowPulse 4s ease-in-out infinite;">
 
-  <div class="page">
-    <div class="spaceWash"></div>
+      <div style="font-size:16px;letter-spacing:1.5px;margin-bottom:28px;opacity:.75;">
+        coming soon
+      </div>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="heroVignette"></div>
+      <!-- SOCIAL ICONS -->
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
+          <img src="x.png?v=22" style="width:20px;" alt="X">
+        </a>
 
-      <div style="position:relative; z-index:3;">
-        <img class="logo" src="bild.jpg?v=33" alt="fuckonbase">
+        <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
+          <img src="dex.png?v=22" style="width:20px;" alt="Dexscreener">
+        </a>
 
-        <div style="font-size:16px; letter-spacing:1.5px; margin-bottom:28px; opacity:0.75;">
-          coming soon
+        <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
+          <img src="gecko.png?v=22" style="width:20px;" alt="GeckoTerminal">
+        </a>
+
+        <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
+          <img src="tg.png?v=22" style="width:20px;" alt="Telegram">
+        </a>
+      </div>
+
+      <!-- CONTRACT -->
+      <div class="copyWrap">
+        <div class="contractBox" id="copyBtn" role="button" aria-label="Copy contract">
+          <div class="contractLabel">Contract</div>
+          <div class="contractFull" id="contractFull"></div>
         </div>
-
-        <div class="socialRow">
-          <a class="social" href="https://x.com/fuck_on_base" target="_blank" rel="noopener noreferrer">
-            <img src="x.png?v=33" alt="X" style="width:20px;height:20px;">
-          </a>
-          <a class="social" href="https://dexscreener.com/base/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="dex.png?v=33" alt="Dexscreener" style="width:20px;height:20px;">
-          </a>
-          <a class="social" href="https://www.geckoterminal.com/base/pools/0xb2b4f25b6ecb87c0e17be2a7967309ad665a256c562c09fc259d49055fc8613e" target="_blank" rel="noopener noreferrer">
-            <img src="gecko.png?v=33" alt="GeckoTerminal" style="width:20px;height:20px;">
-          </a>
-          <a class="social" href="https://t.me/+N0PPs93rNFhjOGFi" target="_blank" rel="noopener noreferrer">
-            <img src="tg.png?v=33" alt="Telegram" style="width:20px;height:20px;">
-          </a>
-        </div>
-
-        <div class="copyWrap">
-          <div class="contractBox" id="copyBtn" role="button" aria-label="Copy contract">
-            <div class="contractLabel">Contract</div>
-            <div class="contractFull" id="contractFull"></div>
-          </div>
-          <div class="status" id="copyStatus">
-            <span class="check">✓</span> copied
-          </div>
+        <div class="status" id="copyStatus" aria-live="polite">
+          <span class="check">✓</span> copied
         </div>
       </div>
-    </section>
+    </div>
 
-    <!-- LORE (14 images) -->
-    <section class="lore">
-      <div class="loreTitle">Lore</div>
+    <div class="scrollHint">
+      <div class="scrollText">scroll</div>
+      <div class="scrollDot"></div>
+    </div>
 
-      <div class="grid">
-        <figure class="card"><img src="fuck%20lore_000000.png" alt="Lore 000000"><figcaption>fuck lore_000000</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000001.png" alt="Lore 000001"><figcaption>fuck lore_000001</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000002.png" alt="Lore 000002"><figcaption>fuck lore_000002</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000003.png" alt="Lore 000003"><figcaption>fuck lore_000003</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000004.png" alt="Lore 000004"><figcaption>fuck lore_000004</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000005.png" alt="Lore 000005"><figcaption>fuck lore_000005</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000006.png" alt="Lore 000006"><figcaption>fuck lore_000006</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000007.png" alt="Lore 000007"><figcaption>fuck lore_000007</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000008.png" alt="Lore 000008"><figcaption>fuck lore_000008</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000009.png" alt="Lore 000009"><figcaption>fuck lore_000009</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000010.png" alt="Lore 000010"><figcaption>fuck lore_000010</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000011.png" alt="Lore 000011"><figcaption>fuck lore_000011</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000012.png" alt="Lore 000012"><figcaption>fuck lore_000012</figcaption></figure>
-        <figure class="card"><img src="fuck%20lore_000013.png" alt="Lore 000013"><figcaption>fuck lore_000013</figcaption></figure>
+    <div class="fadeInTeaser"></div>
+  </section>
+
+  <!-- LORE SECTION -->
+  <section class="section">
+    <div class="lore">
+
+      <div class="loreItem">
+        <img src="fucklore1.png" alt="1. Discourse filler">
+        <div class="loreText">
+          <h2>1. Discourse filler</h2>
+          <p>Used to structure speech rhythmically rather than semantically. The word carries little literal meaning and mainly expresses intensity, agitation, or emphasis in spoken language.</p>
+        </div>
       </div>
-    </section>
-  </div>
+
+      <div class="loreItem">
+        <img src="fucklore2.png" alt="2. Adverb / intensifier">
+        <div class="loreText">
+          <h2>2. Adverb / intensifier</h2>
+          <p>Functions as a strong amplifier of emotion or degree. It adds force comparable to “very,” but with much higher emotional impact and informality.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore3.png" alt="3. Adjective">
+        <div class="loreText">
+          <h2>3. Adjective</h2>
+          <p>Modifies a noun to inject emotional weight rather than factual information. This use signals frustration, contempt, or emphasis and contributes mood instead of content.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore4.png" alt="4. Noun (abstract)">
+        <div class="loreText">
+          <h2>4. Noun (abstract)</h2>
+          <p>Refers to a situation, outcome, or level of concern rather than a concrete object. Meaning is highly context-dependent and often tied to disbelief or indifference.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore5.png" alt="5. Question intensifier">
+        <div class="loreText">
+          <h2>5. Question intensifier</h2>
+          <p>Adds emotional force to a question without changing its factual meaning. It raises urgency, disbelief, or hostility and signals strong emotional involvement.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore6.png" alt="6. Phrasal verb base">
+        <div class="loreText">
+          <h2>6. Phrasal verb base</h2>
+          <p>Combines with particles to form new verbs with distinct meanings. These constructions are highly productive and often far removed from the original sexual sense.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore7.png" alt="7. General verb">
+        <div class="loreText">
+          <h2>7. General verb</h2>
+          <p>Used metaphorically to express damage, failure, harm, or negative impact. The meaning is non-sexual and replaces more specific verbs for emotional emphasis.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore8.png" alt="8. Past participle / adjectival state">
+        <div class="loreText">
+          <h2>8. Past participle / adjectival state</h2>
+          <p>Describes a condition of being ruined, doomed, or exhausted. Often dramatic or exaggerated, frequently implying that recovery is unlikely.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore9.png" alt="9. Reflexive verb">
+        <div class="loreText">
+          <h2>9. Reflexive verb</h2>
+          <p>Indicates self-inflicted harm or sabotage. This use emphasizes personal responsibility, regret, or irony, often with a self-critical tone.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore10.png" alt="10. Idiomatic / fixed expressions">
+        <div class="loreText">
+          <h2>10. Idiomatic / fixed expressions</h2>
+          <p>Appears in conventionalized phrases whose meanings are not literal. These expressions function as single semantic units and signal fluency and familiarity.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore11.png" alt="11. Interjection">
+        <div class="loreText">
+          <h2>11. Interjection</h2>
+          <p>Used as a standalone emotional reaction. Meaning is derived entirely from context and intonation and reflects immediate emotional response.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore12.png" alt="12. Insult noun (person)">
+        <div class="loreText">
+          <h2>12. Insult noun (person)</h2>
+          <p>Functions as a negative label for a person. The word carries strong emotional judgment with little descriptive content.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore13.png" alt="13. Literal verb">
+        <div class="loreText">
+          <h2>13. Literal verb</h2>
+          <p>Refers directly to the sexual act. This is the original, concrete meaning of the word and is typically explicit and unambiguous.</p>
+        </div>
+      </div>
+
+      <div class="loreItem">
+        <img src="fucklore14.png" alt="14. Aggressive / hostile verb">
+        <div class="loreText">
+          <h2>14. Aggressive / hostile verb</h2>
+          <p>Used to attack, dismiss, or provoke another person. The primary function is social confrontation rather than literal meaning.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <script>
     const CONTRACT = "0xc8f8C5A9DfF280Cde517D197c82EE10fcB46BB07";
     const contractFull = document.getElementById("contractFull");
     const copyBtn = document.getElementById("copyBtn");
     const status = document.getElementById("copyStatus");
+
     contractFull.textContent = CONTRACT;
 
-    async function copyText(text){
-      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text);
+    async function copyText(t){
+      if (navigator.clipboard && window.isSecureContext) {
+        return navigator.clipboard.writeText(t);
+      }
       const ta=document.createElement("textarea");
-      ta.value=text; ta.style.position="fixed"; ta.style.left="-9999px";
+      ta.value=t; ta.style.position="fixed"; ta.style.left="-9999px";
       document.body.appendChild(ta); ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
+      document.execCommand("copy"); document.body.removeChild(ta);
     }
 
-    let t;
+    let timer;
     copyBtn.addEventListener("click", async ()=>{
       await copyText(CONTRACT);
       status.classList.add("show");
-      clearTimeout(t);
-      t=setTimeout(()=>status.classList.remove("show"),1200);
+      clearTimeout(timer);
+      timer=setTimeout(()=>status.classList.remove("show"),1200);
     });
   </script>
+
 </body>
 </html>
